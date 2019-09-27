@@ -2,10 +2,12 @@ console.log("Let the game begin!");
 
 var boardSize = 3;
 
-var updateBoardElements = function(board) {
-
-};
-
+var refBoard = [
+[1,2,3],
+[4,5,6],
+[7,8,null]
+];
+console.log("refBoard toString", refBoard.toString())
 
 var getUpdatedBoard = function(squareNumber, board) {
     console.log("going to move square!");
@@ -103,7 +105,13 @@ var handleSquareClick = function(event, board) {
 
 };
 
+var restartGame = function() {
+    console.log("restarting game!");
+    var randomBoard = createRandomBoard(boardSize);
 
+
+    createBoardElements(randomBoard);
+};
 
 var createBoardElements = function(board) {
     console.log("creating board elements!");
@@ -126,9 +134,20 @@ var createBoardElements = function(board) {
         boardDiv.appendChild(rowDiv);
     }
 
+    console.log("boardDiv: ", boardDiv);
+
+
     var interfaceDiv = document.querySelector(".interface");
     interfaceDiv.innerHTML = "";
+
     interfaceDiv.appendChild(boardDiv);
+
+    var restartButton = document.createElement("button");
+    restartButton.innerText = "Restart";
+    restartButton.id = "restart-game-btn";
+    restartButton.addEventListener("click", restartGame);
+
+    document.querySelector(".board").after(restartButton);
 
 };
 
@@ -152,7 +171,7 @@ var createRandomBoard = function(boardSize) {
     }
 
     for (var h = 0; h < boardSize * boardSize; h++) {
-        var randomInt = getRandomInt(0,boardSize-1);
+        var randomInt = getRandomInt(0, boardSize - 1);
         var numA = numbers[h];
         var numB = numbers[randomInt];
         numbers[h] = numB;
@@ -160,9 +179,9 @@ var createRandomBoard = function(boardSize) {
     }
 
 
-    for (var i = 0; i < boardSize; i++ ){
+    for (var i = 0; i < boardSize; i++) {
         row = [];
-        for (var j = 0; j < boardSize; j++){
+        for (var j = 0; j < boardSize; j++) {
             row.push(numbers[0]);
             numbers.shift();
         }
