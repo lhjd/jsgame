@@ -1,6 +1,11 @@
 console.log("Let the game begin!");
 
-var board = [];
+var board = [
+                [1,2,3],
+                [4,5,6],
+                [7,8,null]
+            ];
+
 var boardSize = 3;
 
 
@@ -16,6 +21,7 @@ var createBoardElements = function(board, boardSize) {
         for (var j = 0; j < boardSize; j++) {
             var squareDiv = document.createElement("div");
             squareDiv.classList.add("square");
+            squareDiv.innerText = board[i][j];
             rowDiv.appendChild(squareDiv);
         }
         boardDiv.appendChild(rowDiv);
