@@ -1,11 +1,5 @@
 console.log("Let the game begin!");
 
-var board = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, null]
-];
-
 var boardSize = 3;
 
 var updateBoardElements = function(board) {
@@ -38,7 +32,7 @@ var checkCurrentSquareLocation = function(squareNumber, board) {
         for (var j = 0; j < board.length; j++) {
             if (board[i][j] === squareNumber) {
                 // debugger;
-                return [ i, j];
+                return [i, j];
             }
         }
     }
@@ -50,7 +44,7 @@ var checkEmptySquareLocation = function(board) {
         for (var j = 0; j < board.length; j++) {
             if (board[i][j] === null) {
                 // debugger;
-                return [ i, j];
+                return [i, j];
             }
         }
     }
@@ -69,9 +63,9 @@ var checkMovableSquare = function(squareNumber, board) {
     var currSqLocX = currSqLoc[0];
     var currSqLocY = currSqLoc[1];
 
-    if (emptSqLocX === currSqLocX && (emptSqLocY === currSqLocY + 1 || emptSqLocY === currSqLocY - 1) ) {
+    if (emptSqLocX === currSqLocX && (emptSqLocY === currSqLocY + 1 || emptSqLocY === currSqLocY - 1)) {
         return true;
-    } else if (emptSqLocY === currSqLocY && (emptSqLocX === currSqLocX + 1 || emptSqLocX === currSqLocX - 1 )) {
+    } else if (emptSqLocY === currSqLocY && (emptSqLocX === currSqLocX + 1 || emptSqLocX === currSqLocX - 1)) {
         return true;
     } else {
         return false;
@@ -138,15 +132,67 @@ var createBoardElements = function(board) {
 
 };
 
-// set up a new game
-var startNewGame = function(board, boardSize) {
-    console.log("start new game!");
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
-    createBoardElements(board);
+var createRandomBoard = function(boardSize) {
 
+    var randomBoard = [];
+    var row = [];
+    var numbers = [];
+
+    for (var k = 0; k < boardSize * boardSize; k++) {
+        numbers[k] = k;
+        if (k === 0) {
+            numbers[k] = null;
+        }
+    }
+
+    for (var h = 0; h < boardSize * boardSize; h++) {
+        var randomInt = getRandomInt(0,boardSize-1);
+        var numA = numbers[h];
+        var numB = numbers[randomInt];
+        numbers[h] = numB;
+        numbers[randomInt] = numA;
+    }
+
+
+    for (var i = 0; i < boardSize; i++ ){
+        row = [];
+        for (var j = 0; j < boardSize; j++){
+            row.push(numbers[0]);
+            numbers.shift();
+        }
+        randomBoard.push(row);
+    }
+
+    console.log("random board: ", randomBoard);
+
+    return randomBoard;
 
 };
 
 
+
+// set up a new game
+var startNewGame = function(boardSize) {
+    console.log("start new game!");
+
+    // var board = [
+    //     [1, 2, 3],
+    //     [4, 5, 6],
+    //     [7, 8, null]
+    // ];
+
+    var randomBoard = createRandomBoard(boardSize);
+
+
+    createBoardElements(randomBoard);
+};
+
+
 var newGameBtn = document.querySelector("#new-game-btn");
-newGameBtn.addEventListener("click", function() { startNewGame(board, boardSize); });
+newGameBtn.addEventListener("click", function() { startNewGame(boardSize); });
