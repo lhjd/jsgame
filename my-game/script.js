@@ -8,6 +8,13 @@ var board = [
 
 var boardSize = 3;
 
+var handleSquareClick = function (event) {
+    // console.log("event: ", event);
+    var squareNumber = event.target.innerText;
+    console.log( "square number " + squareNumber + " is clicked!");
+};
+
+
 
 var createBoardElements = function(board, boardSize) {
     console.log("creating board elements!");
@@ -22,6 +29,7 @@ var createBoardElements = function(board, boardSize) {
             var squareDiv = document.createElement("div");
             squareDiv.classList.add("square");
             squareDiv.innerText = board[i][j];
+            squareDiv.addEventListener("click", handleSquareClick);
             rowDiv.appendChild(squareDiv);
         }
         boardDiv.appendChild(rowDiv);
