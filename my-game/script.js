@@ -8,6 +8,30 @@ var board = [
 
 var boardSize = 3;
 
+var updateBoardElements = function(board) {
+
+};
+
+
+var getUpdatedBoard = function(squareNumber, board) {
+    console.log("going to move square!");
+    var emptSqLoc = checkEmptySquareLocation(board);
+    console.log("empty square location: ", emptSqLoc);
+    var currSqLoc = checkCurrentSquareLocation(squareNumber, board);
+    console.log("current square location: ", currSqLoc);
+
+    var emptSqLocX = emptSqLoc[0];
+    var emptSqLocY = emptSqLoc[1];
+    var currSqLocX = currSqLoc[0];
+    var currSqLocY = currSqLoc[1];
+
+    board[emptSqLocX][emptSqLocY] = squareNumber;
+    board[currSqLocX][currSqLocY] = null;
+
+    return board;
+};
+
+
 var checkCurrentSquareLocation = function(squareNumber, board) {
     console.log("checking current square location!");
     for (var i = 0; i < board.length; i++) {
@@ -52,16 +76,23 @@ var checkMovableSquare = function(squareNumber, board) {
     } else {
         return false;
     }
-
 };
 
 var moveSquare = function(squareNumber, board) {
-    console.log("moving square!");
+    console.log("trying to moving square!");
 
     if (squareNumber) {
-        console.log("moving square number ", squareNumber);
         var isMovableSquare = checkMovableSquare(squareNumber, board);
         console.log("square is movable: ", isMovableSquare);
+        if (isMovableSquare) {
+            console.log("going to update board!");
+            var updatedBoard = getUpdatedBoard(squareNumber, board);
+            console.log("updated board: ", updatedBoard);
+            createBoardElements(updatedBoard);
+        } else {
+            console.log("square is not movable!");
+        }
+
     } else {
         console.log("empty square is clicked, nothing is going move!");
     }
@@ -80,16 +111,16 @@ var handleSquareClick = function(event, board) {
 
 
 
-var createBoardElements = function(board, boardSize) {
+var createBoardElements = function(board) {
     console.log("creating board elements!");
     //create board
     var boardDiv = document.createElement("div");
     boardDiv.classList.add("board");
 
-    for (var i = 0; i < boardSize; i++) {
+    for (var i = 0; i < board.length; i++) {
         var rowDiv = document.createElement("div");
         rowDiv.classList.add("row");
-        for (var j = 0; j < boardSize; j++) {
+        for (var j = 0; j < board.length; j++) {
             var squareDiv = document.createElement("div");
             squareDiv.classList.add("square");
             squareDiv.innerText = board[i][j];
@@ -108,14 +139,14 @@ var createBoardElements = function(board, boardSize) {
 };
 
 // set up a new game
-var startNewGame = function(event, board, boardSize) {
+var startNewGame = function(board, boardSize) {
     console.log("start new game!");
 
-    createBoardElements(board, boardSize);
+    createBoardElements(board);
 
 
 };
 
 
 var newGameBtn = document.querySelector("#new-game-btn");
-newGameBtn.addEventListener("click", function(event) { startNewGame(event, board, boardSize); });
+newGameBtn.addEventListener("click", function() { startNewGame(board, boardSize); });
