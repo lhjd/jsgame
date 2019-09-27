@@ -1,0 +1,33 @@
+.board {
+	display: flex;
+	flex-direction: column;
+	/*border: 2px solid red;*/
+	margin: 0 auto;
+	width: 60%;
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+	/*border: 2px solid green;*/
+	justify-content: center;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.square {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border: 2px solid #ccc;
+	width: 100px;
+	height: 100px;
+	box-sizing: border-box;
+	/*background-color: #75FFC9;*/
+	font-size: 2em;
+}
+
+.text-center {
+	text-align: center;
+}
