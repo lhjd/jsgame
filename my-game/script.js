@@ -3,10 +3,11 @@ console.log("Let the game begin!");
 var boardSize = 3;
 
 var refBoard = [
-[1,2,3],
-[4,5,6],
-[7,8,null]
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, null]
 ];
+
 console.log("refBoard toString", refBoard.toString())
 
 var getUpdatedBoard = function(squareNumber, board) {
@@ -87,6 +88,7 @@ var moveSquare = function(squareNumber, board) {
             createBoardElements(updatedBoard);
         } else {
             console.log("square is not movable!");
+            return board;
         }
 
     } else {
@@ -95,6 +97,32 @@ var moveSquare = function(squareNumber, board) {
 
 };
 
+var moveRandomSquare = function(randomSquareNumber, board) {
+    console.log("trying to move random square!");
+
+    var isMovableSquare = checkMovableSquare(randomSquareNumber, board);
+    console.log("square is movable: ", isMovableSquare);
+    if (isMovableSquare) {
+        console.log("going to move random square!");
+        var updatedBoard = getUpdatedBoard(randomSquareNumber, board);
+        console.log("updated board: ", updatedBoard);
+        return updatedBoard;
+        // createBoardElements(updatedBoard);
+    } else {
+        console.log("square is not movable!");
+        return board;
+    }
+};
+
+var checkWinState = function(board) {
+    console.log("checking win state!");
+    var currBoardString = board.toString();
+    var refBoardString = refBoard.toString();
+
+    console.log(currBoardString);
+    console.log(refBoardString);
+
+};
 
 var handleSquareClick = function(event, board) {
     // console.log("event: ", event);
@@ -102,7 +130,7 @@ var handleSquareClick = function(event, board) {
     console.log("square number " + squareNumber + " is clicked!");
 
     moveSquare(squareNumber, board);
-
+    checkWinState(board);
 };
 
 var restartGame = function() {
@@ -158,34 +186,17 @@ function getRandomInt(min, max) {
 }
 
 var createRandomBoard = function(boardSize) {
+    console.log("creating random board!");
 
-    var randomBoard = [];
-    var row = [];
-    var numbers = [];
+    var randomSquareNumber = getRandomInt(1, (boardSize * boardSize) - 1);
 
-    for (var k = 0; k < boardSize * boardSize; k++) {
-        numbers[k] = k;
-        if (k === 0) {
-            numbers[k] = null;
-        }
-    }
+    console.log("random square number: ", randomSquareNumber);
 
-    for (var h = 0; h < boardSize * boardSize; h++) {
-        var randomInt = getRandomInt(0, boardSize - 1);
-        var numA = numbers[h];
-        var numB = numbers[randomInt];
-        numbers[h] = numB;
-        numbers[randomInt] = numA;
-    }
+    var randomBoard = moveRandomSquare(randomSquareNumber, refBoard);
 
-
-    for (var i = 0; i < boardSize; i++) {
-        row = [];
-        for (var j = 0; j < boardSize; j++) {
-            row.push(numbers[0]);
-            numbers.shift();
-        }
-        randomBoard.push(row);
+    for (var i = 0; i < 1000; i++) {
+        randomSquareNumber = getRandomInt(1, (boardSize * boardSize) - 1);
+        randomBoard = moveRandomSquare(randomSquareNumber, randomBoard);
     }
 
     console.log("random board: ", randomBoard);
