@@ -8,10 +8,23 @@ var board = [
 
 var boardSize = 3;
 
-var handleSquareClick = function (event) {
+var moveSquare = function(squareNumber) {
+    console.log("moving square!");
+
+    if (!squareNumber) {
+        console.log("empty square is clicked!");
+    }
+
+};
+
+
+var handleSquareClick = function (event, board) {
     // console.log("event: ", event);
     var squareNumber = event.target.innerText;
     console.log( "square number " + squareNumber + " is clicked!");
+
+    moveSquare(squareNumber, board);
+
 };
 
 
@@ -29,7 +42,9 @@ var createBoardElements = function(board, boardSize) {
             var squareDiv = document.createElement("div");
             squareDiv.classList.add("square");
             squareDiv.innerText = board[i][j];
-            squareDiv.addEventListener("click", handleSquareClick);
+            squareDiv.addEventListener("click", function(event) {
+                handleSquareClick(event, board);
+            });
             rowDiv.appendChild(squareDiv);
         }
         boardDiv.appendChild(rowDiv);
