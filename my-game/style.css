@@ -31,3 +31,29 @@
 .text-center {
 	text-align: center;
 }
+
+.interface {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	/*border: 2px solid red;*/
+}
+
+.interface > h1 {
+	font-family: Helvetica, sans-serif;
+	font-size: 40px;
+	color: #FFB13C;
+	text-shadow: 3px 3px #ccc;
+}
+
+#new-game-btn {
+	width: 200px;
+	height: 50px;
+	font-family: Helvetica, sans-serif;
+	background-color: white;
+	border-radius: 5px;
+	border: 2px solid #ccc;
+	color: grey;
+	box-shadow: 5px 5px #ccc;
+}
