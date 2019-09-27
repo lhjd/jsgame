@@ -1,27 +1,78 @@
 console.log("Let the game begin!");
 
 var board = [
-                [1,2,3],
-                [4,5,6],
-                [7,8,null]
-            ];
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, null]
+];
 
 var boardSize = 3;
 
-var moveSquare = function(squareNumber) {
+var checkCurrentSquareLocation = function(squareNumber, board) {
+    console.log("checking current square location!");
+    for (var i = 0; i < board.length; i++) {
+        for (var j = 0; j < board.length; j++) {
+            if (board[i][j] === squareNumber) {
+                // debugger;
+                return [ i, j];
+            }
+        }
+    }
+};
+
+var checkEmptySquareLocation = function(board) {
+    console.log("checking empty square location!");
+    for (var i = 0; i < board.length; i++) {
+        for (var j = 0; j < board.length; j++) {
+            if (board[i][j] === null) {
+                // debugger;
+                return [ i, j];
+            }
+        }
+    }
+};
+
+
+var checkMovableSquare = function(squareNumber, board) {
+    console.log("checking whether square is movable!");
+    var emptSqLoc = checkEmptySquareLocation(board);
+    console.log("empty square location: ", emptSqLoc);
+    var currSqLoc = checkCurrentSquareLocation(squareNumber, board);
+    console.log("current square location: ", currSqLoc);
+
+    var emptSqLocX = emptSqLoc[0];
+    var emptSqLocY = emptSqLoc[1];
+    var currSqLocX = currSqLoc[0];
+    var currSqLocY = currSqLoc[1];
+
+    if (emptSqLocX === currSqLocX && (emptSqLocY === currSqLocY + 1 || emptSqLocY === currSqLocY - 1) ) {
+        return true;
+    } else if (emptSqLocY === currSqLocY && (emptSqLocX === currSqLocX + 1 || emptSqLocX === currSqLocX - 1 )) {
+        return true;
+    } else {
+        return false;
+    }
+
+};
+
+var moveSquare = function(squareNumber, board) {
     console.log("moving square!");
 
-    if (!squareNumber) {
-        console.log("empty square is clicked!");
+    if (squareNumber) {
+        console.log("moving square number ", squareNumber);
+        var isMovableSquare = checkMovableSquare(squareNumber, board);
+        console.log("square is movable: ", isMovableSquare);
+    } else {
+        console.log("empty square is clicked, nothing is going move!");
     }
 
 };
 
 
-var handleSquareClick = function (event, board) {
+var handleSquareClick = function(event, board) {
     // console.log("event: ", event);
-    var squareNumber = event.target.innerText;
-    console.log( "square number " + squareNumber + " is clicked!");
+    var squareNumber = parseInt(event.target.innerText);
+    console.log("square number " + squareNumber + " is clicked!");
 
     moveSquare(squareNumber, board);
 
