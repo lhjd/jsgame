@@ -8,14 +8,21 @@ var refBoard = [
     [7, 8, null]
 ];
 
-console.log("refBoard toString", refBoard.toString())
+var startingBoard = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, null]
+];
+
+// console.log("original refBoard", refBoard);
 
 var getUpdatedBoard = function(squareNumber, board) {
-    console.log("going to move square!");
+    // console.log("going to move square!");
     var emptSqLoc = checkEmptySquareLocation(board);
-    console.log("empty square location: ", emptSqLoc);
+    // console.log("empty square location: ", emptSqLoc);
     var currSqLoc = checkCurrentSquareLocation(squareNumber, board);
-    console.log("current square location: ", currSqLoc);
+    // console.log("current square location: ", currSqLoc);
+    // debugger;
 
     var emptSqLocX = emptSqLoc[0];
     var emptSqLocY = emptSqLoc[1];
@@ -30,7 +37,7 @@ var getUpdatedBoard = function(squareNumber, board) {
 
 
 var checkCurrentSquareLocation = function(squareNumber, board) {
-    console.log("checking current square location!");
+    // console.log("checking current square location!");
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board.length; j++) {
             if (board[i][j] === squareNumber) {
@@ -42,7 +49,7 @@ var checkCurrentSquareLocation = function(squareNumber, board) {
 };
 
 var checkEmptySquareLocation = function(board) {
-    console.log("checking empty square location!");
+    // console.log("checking empty square location!");
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board.length; j++) {
             if (board[i][j] === null) {
@@ -55,11 +62,11 @@ var checkEmptySquareLocation = function(board) {
 
 
 var checkMovableSquare = function(squareNumber, board) {
-    console.log("checking whether square is movable!");
+    // console.log("checking whether square is movable!");
     var emptSqLoc = checkEmptySquareLocation(board);
-    console.log("empty square location: ", emptSqLoc);
+    // console.log("empty square location: ", emptSqLoc);
     var currSqLoc = checkCurrentSquareLocation(squareNumber, board);
-    console.log("current square location: ", currSqLoc);
+    // console.log("current square location: ", currSqLoc);
 
     var emptSqLocX = emptSqLoc[0];
     var emptSqLocY = emptSqLoc[1];
@@ -76,18 +83,17 @@ var checkMovableSquare = function(squareNumber, board) {
 };
 
 var moveSquare = function(squareNumber, board) {
-    console.log("trying to moving square!");
-
+    // console.log("trying to moving square!");
     if (squareNumber) {
         var isMovableSquare = checkMovableSquare(squareNumber, board);
-        console.log("square is movable: ", isMovableSquare);
+        // console.log("square is movable: ", isMovableSquare);
         if (isMovableSquare) {
-            console.log("going to update board!");
+            // console.log("going to update board!");
             var updatedBoard = getUpdatedBoard(squareNumber, board);
-            console.log("updated board: ", updatedBoard);
+            // console.log("updated board: ", updatedBoard);
             createBoardElements(updatedBoard);
         } else {
-            console.log("square is not movable!");
+            // console.log("square is not movable!");
             return board;
         }
 
@@ -98,43 +104,55 @@ var moveSquare = function(squareNumber, board) {
 };
 
 var moveRandomSquare = function(randomSquareNumber, board) {
-    console.log("trying to move random square!");
+    // console.log("trying to move random square!");
+    // console.log("refBoard: ", refBoard);
 
     var isMovableSquare = checkMovableSquare(randomSquareNumber, board);
-    console.log("square is movable: ", isMovableSquare);
+    // console.log("square is movable: ", isMovableSquare);
     if (isMovableSquare) {
-        console.log("going to move random square!");
+        // console.log("going to move random square!");
+        // console.log(JSON.stringify(refBoard));
         var updatedBoard = getUpdatedBoard(randomSquareNumber, board);
-        console.log("updated board: ", updatedBoard);
+        // console.log("updated board: ", updatedBoard);
+        // console.log(JSON.stringify(refBoard));
         return updatedBoard;
         // createBoardElements(updatedBoard);
     } else {
-        console.log("square is not movable!");
+        // console.log("square is not movable!");
         return board;
     }
 };
 
 var checkWinState = function(board) {
-    console.log("checking win state!");
+    // console.log("checking win state!");
+    // console.log("refBoard", refBoard);
     var currBoardString = board.toString();
     var refBoardString = refBoard.toString();
 
-    console.log(currBoardString);
-    console.log(refBoardString);
+    // console.log(currBoardString);
+    // console.log(refBoardString);
+
+    if (currBoardString === refBoardString) {
+        return true;
+    }
 
 };
 
 var handleSquareClick = function(event, board) {
     // console.log("event: ", event);
     var squareNumber = parseInt(event.target.innerText);
-    console.log("square number " + squareNumber + " is clicked!");
+    // console.log("square number " + squareNumber + " is clicked!");
 
     moveSquare(squareNumber, board);
-    checkWinState(board);
+
+    var hasWon = checkWinState(board);
+    if (hasWon) {
+        setTimeout(function() { alert("You Won!"); }, 2000);
+    }
 };
 
 var restartGame = function() {
-    console.log("restarting game!");
+    // console.log("restarting game!");
     var randomBoard = createRandomBoard(boardSize);
 
 
@@ -142,7 +160,7 @@ var restartGame = function() {
 };
 
 var createBoardElements = function(board) {
-    console.log("creating board elements!");
+    // console.log("creating board elements!");
     //create board
     var boardDiv = document.createElement("div");
     boardDiv.classList.add("board");
@@ -162,7 +180,6 @@ var createBoardElements = function(board) {
         boardDiv.appendChild(rowDiv);
     }
 
-    console.log("boardDiv: ", boardDiv);
 
 
     var interfaceDiv = document.querySelector(".interface");
@@ -186,20 +203,27 @@ function getRandomInt(min, max) {
 }
 
 var createRandomBoard = function(boardSize) {
-    console.log("creating random board!");
+    // console.log("creating random board!");
+    // console.log("refBoard: ", refBoard);
 
     var randomSquareNumber = getRandomInt(1, (boardSize * boardSize) - 1);
 
-    console.log("random square number: ", randomSquareNumber);
+    // console.log("random square number: ", randomSquareNumber);
 
-    var randomBoard = moveRandomSquare(randomSquareNumber, refBoard);
+//     var startingBoard =  [
+//     [1, 2, 3],
+//     [4, 5, 6],
+//     [7, 8, null]
+// ];
 
-    for (var i = 0; i < 1000; i++) {
+    var randomBoard = moveRandomSquare(randomSquareNumber, startingBoard);
+
+    for (var i = 0; i < 500; i++) {
         randomSquareNumber = getRandomInt(1, (boardSize * boardSize) - 1);
         randomBoard = moveRandomSquare(randomSquareNumber, randomBoard);
     }
 
-    console.log("random board: ", randomBoard);
+    // console.log("random board: ", randomBoard);
 
     return randomBoard;
 
@@ -209,13 +233,15 @@ var createRandomBoard = function(boardSize) {
 
 // set up a new game
 var startNewGame = function(boardSize) {
-    console.log("start new game!");
+    // console.log("start new game!");
 
     // var board = [
     //     [1, 2, 3],
     //     [4, 5, 6],
     //     [7, 8, null]
     // ];
+
+
 
     var randomBoard = createRandomBoard(boardSize);
 
