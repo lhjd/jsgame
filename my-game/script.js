@@ -1,13 +1,4 @@
-console.log("Let the game begin!");
-
 var refBoard = [
-    [1, 2, 3, 4],
-    [5, 6, 7, 8],
-    [9, 10, 11, 12],
-    [13, 14, 15, null]
-];
-
-var startingBoard = [
     [1, 2, 3, 4],
     [5, 6, 7, 8],
     [9, 10, 11, 12],
@@ -83,7 +74,15 @@ var getMovedBoard = function(squareNumber, board) {
 };
 
 
+var getRefBoad = function() {
+    var board = [];
+    board = refBoard.map(row => row.slice());
+
+    return board;
+};
+
 var checkWinState = function(board) {
+    var refBoard = getRefBoad();
     var currBoardString = board.toString();
     var refBoardString = refBoard.toString();
 
@@ -163,11 +162,15 @@ var getScrambledBoard = function(startingBoard) {
 };
 
 // set up a new game
-var startNewGame = function(startingBoard) {
+var startNewGame = function(refBoard) {
+    var startingBoard = [];
+
+    startingBoard = refBoard.map(row => row.slice());
+
     var scrambledBoard = getScrambledBoard(startingBoard);
 
     renderBoard(scrambledBoard);
 };
 
 var newGameBtn = document.querySelector("#new-game-btn");
-newGameBtn.addEventListener("click", function() { startNewGame(startingBoard);});
+newGameBtn.addEventListener("click", function() { startNewGame(refBoard);});
