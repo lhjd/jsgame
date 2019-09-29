@@ -1,28 +1,22 @@
 console.log("Let the game begin!");
 
-var boardSize = 3;
-
 var refBoard = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, null]
+    [1, 2, 3, 4],
+    [5, 6, 7, 8],
+    [9, 10, 11, 12],
+    [13, 14, 15, null]
 ];
 
 var startingBoard = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, null]
+    [1, 2, 3, 4],
+    [5, 6, 7, 8],
+    [9, 10, 11, 12],
+    [13, 14, 15, null]
 ];
 
-// console.log("original refBoard", refBoard);
-
-var getUpdatedBoard = function(squareNumber, board) {
-    // console.log("going to move square!");
-    var emptSqLoc = checkEmptySquareLocation(board);
-    // console.log("empty square location: ", emptSqLoc);
-    var currSqLoc = checkCurrentSquareLocation(squareNumber, board);
-    // console.log("current square location: ", currSqLoc);
-    // debugger;
+var getBoardWithSquaresSwapped = function(squareNumber, board) {
+    var emptSqLoc = getEmptySquareLocation(board);
+    var currSqLoc = getCurrentSquareLocation(squareNumber, board);
 
     var emptSqLocX = emptSqLoc[0];
     var emptSqLocY = emptSqLoc[1];
@@ -35,38 +29,29 @@ var getUpdatedBoard = function(squareNumber, board) {
     return board;
 };
 
-
-var checkCurrentSquareLocation = function(squareNumber, board) {
-    // console.log("checking current square location!");
+var getCurrentSquareLocation = function(squareNumber, board) {
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board.length; j++) {
             if (board[i][j] === squareNumber) {
-                // debugger;
                 return [i, j];
             }
         }
     }
 };
 
-var checkEmptySquareLocation = function(board) {
-    // console.log("checking empty square location!");
+var getEmptySquareLocation = function(board) {
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board.length; j++) {
             if (board[i][j] === null) {
-                // debugger;
                 return [i, j];
             }
         }
     }
 };
 
-
 var checkMovableSquare = function(squareNumber, board) {
-    // console.log("checking whether square is movable!");
-    var emptSqLoc = checkEmptySquareLocation(board);
-    // console.log("empty square location: ", emptSqLoc);
-    var currSqLoc = checkCurrentSquareLocation(squareNumber, board);
-    // console.log("current square location: ", currSqLoc);
+    var emptSqLoc = getEmptySquareLocation(board);
+    var currSqLoc = getCurrentSquareLocation(squareNumber, board);
 
     var emptSqLocX = emptSqLoc[0];
     var emptSqLocY = emptSqLoc[1];
@@ -82,86 +67,51 @@ var checkMovableSquare = function(squareNumber, board) {
     }
 };
 
-var moveSquare = function(squareNumber, board) {
-    // console.log("trying to moving square!");
+var getMovedBoard = function(squareNumber, board) {
+
     if (squareNumber) {
         var isMovableSquare = checkMovableSquare(squareNumber, board);
-        // console.log("square is movable: ", isMovableSquare);
         if (isMovableSquare) {
-            // console.log("going to update board!");
-            var updatedBoard = getUpdatedBoard(squareNumber, board);
-            // console.log("updated board: ", updatedBoard);
-            createBoardElements(updatedBoard);
+            var movedBoard = getBoardWithSquaresSwapped(squareNumber, board);
+            return movedBoard;
         } else {
-            // console.log("square is not movable!");
             return board;
         }
-
     } else {
-        console.log("empty square is clicked, nothing is going move!");
-    }
-
-};
-
-var moveRandomSquare = function(randomSquareNumber, board) {
-    // console.log("trying to move random square!");
-    // console.log("refBoard: ", refBoard);
-
-    var isMovableSquare = checkMovableSquare(randomSquareNumber, board);
-    // console.log("square is movable: ", isMovableSquare);
-    if (isMovableSquare) {
-        // console.log("going to move random square!");
-        // console.log(JSON.stringify(refBoard));
-        var updatedBoard = getUpdatedBoard(randomSquareNumber, board);
-        // console.log("updated board: ", updatedBoard);
-        // console.log(JSON.stringify(refBoard));
-        return updatedBoard;
-        // createBoardElements(updatedBoard);
-    } else {
-        // console.log("square is not movable!");
         return board;
     }
 };
 
+
 var checkWinState = function(board) {
-    // console.log("checking win state!");
-    // console.log("refBoard", refBoard);
     var currBoardString = board.toString();
     var refBoardString = refBoard.toString();
-
-    // console.log(currBoardString);
-    // console.log(refBoardString);
 
     if (currBoardString === refBoardString) {
         return true;
     }
-
 };
 
 var handleSquareClick = function(event, board) {
-    // console.log("event: ", event);
     var squareNumber = parseInt(event.target.innerText);
-    // console.log("square number " + squareNumber + " is clicked!");
 
-    moveSquare(squareNumber, board);
+    var movedBoard = getMovedBoard(squareNumber, board);
+
+    renderBoard(movedBoard);
 
     var hasWon = checkWinState(board);
     if (hasWon) {
-        setTimeout(function() { alert("You Won!"); }, 2000);
+        setTimeout(function() { alert("You Won!"); }, 0);
     }
 };
 
 var restartGame = function() {
-    // console.log("restarting game!");
-    var randomBoard = createRandomBoard(boardSize);
+    var scrambledBoard = getScrambledBoard(startingBoard);
 
-
-    createBoardElements(randomBoard);
+    renderBoard(scrambledBoard);
 };
 
-var createBoardElements = function(board) {
-    // console.log("creating board elements!");
-    //create board
+var renderBoard = function(board) {
     var boardDiv = document.createElement("div");
     boardDiv.classList.add("board");
 
@@ -180,8 +130,6 @@ var createBoardElements = function(board) {
         boardDiv.appendChild(rowDiv);
     }
 
-
-
     var interfaceDiv = document.querySelector(".interface");
     interfaceDiv.innerHTML = "";
 
@@ -193,7 +141,6 @@ var createBoardElements = function(board) {
     restartButton.addEventListener("click", restartGame);
 
     document.querySelector(".board").after(restartButton);
-
 };
 
 function getRandomInt(min, max) {
@@ -202,53 +149,25 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-var createRandomBoard = function(boardSize) {
-    // console.log("creating random board!");
-    // console.log("refBoard: ", refBoard);
-
+var getScrambledBoard = function(startingBoard) {
+    var boardSize = startingBoard.length;
     var randomSquareNumber = getRandomInt(1, (boardSize * boardSize) - 1);
-
-    // console.log("random square number: ", randomSquareNumber);
-
-//     var startingBoard =  [
-//     [1, 2, 3],
-//     [4, 5, 6],
-//     [7, 8, null]
-// ];
-
-    var randomBoard = moveRandomSquare(randomSquareNumber, startingBoard);
+    var scrambledBoard = getMovedBoard(randomSquareNumber, startingBoard);
 
     for (var i = 0; i < 500; i++) {
         randomSquareNumber = getRandomInt(1, (boardSize * boardSize) - 1);
-        randomBoard = moveRandomSquare(randomSquareNumber, randomBoard);
+        scrambledBoard = getMovedBoard(randomSquareNumber, scrambledBoard);
     }
 
-    // console.log("random board: ", randomBoard);
-
-    return randomBoard;
-
+    return scrambledBoard;
 };
-
-
 
 // set up a new game
-var startNewGame = function(boardSize) {
-    // console.log("start new game!");
+var startNewGame = function(startingBoard) {
+    var scrambledBoard = getScrambledBoard(startingBoard);
 
-    // var board = [
-    //     [1, 2, 3],
-    //     [4, 5, 6],
-    //     [7, 8, null]
-    // ];
-
-
-
-    var randomBoard = createRandomBoard(boardSize);
-
-
-    createBoardElements(randomBoard);
+    renderBoard(scrambledBoard);
 };
 
-
 var newGameBtn = document.querySelector("#new-game-btn");
-newGameBtn.addEventListener("click", function() { startNewGame(boardSize); });
+newGameBtn.addEventListener("click", function() { startNewGame(startingBoard);});
