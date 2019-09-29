@@ -1,8 +1,9 @@
 var refBoard = [
     [1, 2, 3, 4],
     [5, 6, 7, 8],
-    [9, 10, 11, 12],
-    [13, 14, 15, null]
+    [9, 10, 11, null],
+    // [9, 10, 11, 12],
+    // [13, 14, 15, null]
 ];
 
 var getBoardWithSquaresSwapped = function(squareNumber, board) {
@@ -22,7 +23,7 @@ var getBoardWithSquaresSwapped = function(squareNumber, board) {
 
 var getCurrentSquareLocation = function(squareNumber, board) {
     for (var i = 0; i < board.length; i++) {
-        for (var j = 0; j < board.length; j++) {
+        for (var j = 0; j < board[0].length; j++) {
             if (board[i][j] === squareNumber) {
                 return [i, j];
             }
@@ -32,7 +33,7 @@ var getCurrentSquareLocation = function(squareNumber, board) {
 
 var getEmptySquareLocation = function(board) {
     for (var i = 0; i < board.length; i++) {
-        for (var j = 0; j < board.length; j++) {
+        for (var j = 0; j < board[0].length; j++) {
             if (board[i][j] === null) {
                 return [i, j];
             }
@@ -104,12 +105,6 @@ var handleSquareClick = function(event, board) {
     }
 };
 
-var restartGame = function() {
-    var scrambledBoard = getScrambledBoard(startingBoard);
-
-    renderBoard(scrambledBoard);
-};
-
 var renderBoard = function(board) {
     var boardDiv = document.createElement("div");
     boardDiv.classList.add("board");
@@ -117,7 +112,7 @@ var renderBoard = function(board) {
     for (var i = 0; i < board.length; i++) {
         var rowDiv = document.createElement("div");
         rowDiv.classList.add("row");
-        for (var j = 0; j < board.length; j++) {
+        for (var j = 0; j < board[0].length; j++) {
             var squareDiv = document.createElement("div");
             squareDiv.classList.add("square");
             squareDiv.innerText = board[i][j];
@@ -137,7 +132,7 @@ var renderBoard = function(board) {
     var restartButton = document.createElement("button");
     restartButton.innerText = "Restart";
     restartButton.id = "restart-game-btn";
-    restartButton.addEventListener("click", restartGame);
+    restartButton.addEventListener("click", function() { startNewGame(board); });
 
     document.querySelector(".board").after(restartButton);
 };
