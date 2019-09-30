@@ -3,7 +3,9 @@
 	flex-direction: column;
 	/*border: 2px solid red;*/
 	margin: 0 auto;
-	width: 60%;
+	/*width: 60%;*/
+	background-color: black;
+	padding: 10px;
 }
 
 .row {
@@ -11,7 +13,6 @@
 	flex-direction: row;
 	/*border: 2px solid green;*/
 	justify-content: center;
-	width: 100%;
 	box-sizing: border-box;
 }
 
@@ -20,13 +21,15 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	border: 2px solid #ccc;
+	border: 2px solid black;
 	width: 100px;
 	height: 100px;
 	box-sizing: border-box;
-	background-color: #75FFC9;
+	background-color: #DEED00;
 	font-size: 2em;
 	border-radius: 5px;
+	user-select: none;
+	font-family: Helvetica, sans-serif;
 }
 
 .empty {
@@ -34,22 +37,22 @@
 }
 
 .move-left {
-	transition: all 0.5s ease;
+	transition: all 0.3s ease;
 	transform: translate(-100px, 0);
 }
 
 .move-right {
-	transition: all 0.5s ease;
+	transition: all 0.3s ease;
 	transform: translate(100px, 0);
 }
 
 .move-top {
-	transition: all 0.5s ease;
+	transition: all 0.3s ease;
 	transform: translate(0, -100px);
 }
 
 .move-bottom {
-	transition: all 0.5s ease;
+	transition: all 0.3s ease;
 	transform: translate(0, 100px);
 }
 
@@ -93,4 +96,26 @@
 	border: 2px solid #ccc;
 	color: grey;
 	box-shadow: 5px 5px #ccc;
+}
+
+
+/*reference
+https://www.w3schools.com/howto/howto_css_shake_image.asp
+*/
+
+.shake {
+  /* Start the shake animation and make the animation last for 0.5 seconds */
+  animation: shake 0.5s;
+
+  /* When the animation is finished, start again */
+  animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-5px, 0); }
+  40% { transform: translate(5px, 0); }
+  60% { transform: translate(0, -5px); }
+  80% { transform: translate(0, 5px); }
+  100% { transform: translate(0, 0); }
 }

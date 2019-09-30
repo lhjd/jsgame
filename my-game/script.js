@@ -99,6 +99,7 @@ var checkWinState = function(board) {
 };
 
 var animateSquare = function(event, board) {
+    // debugger;
     var emptSqLoc = getEmptySquareLocation(board);
     var emptSqLocX = emptSqLoc[0];
     var emptSqLocY = emptSqLoc[1];
@@ -120,25 +121,21 @@ var animateSquare = function(event, board) {
     var boardWidth = board[0].length;
     var boardHeight = board.length;
 
-    var emptySquareDiv = document.querySelector(".empty");
-
         // if current square is on the left of the empty square
     if (emptSqLocX === currSqLocX && emptSqLocY === currSqLocY + 1) {
-        currentSquareDiv.classList.add("move-right");
-        emptySquareDiv.classList.add("move-left");
+        currentSquareDiv.classList.add("move-right");        // emptySquareDiv.classList.add("move-left");
         // if current square is on the right of the empty square
     } else if (emptSqLocX === currSqLocX && emptSqLocY === currSqLocY - 1) {
         currentSquareDiv.classList.add("move-left");
-        emptySquareDiv.classList.add("move-right");
         // if current square is on top of the empty square
     } else if (emptSqLocY === currSqLocY && emptSqLocX === currSqLocX + 1) {
         currentSquareDiv.classList.add("move-bottom");
-        emptySquareDiv.classList.add("move-top");
         // if current square is on bottom of the empty square
     } else if (emptSqLocY === currSqLocY && emptSqLocX === currSqLocX - 1) {
         currentSquareDiv.classList.add("move-top");
-        emptySquareDiv.classList.add("move-bottom");
-    } else {}
+    } else {
+        currentSquareDiv.classList.add("shake");
+    }
 
 
 
@@ -152,7 +149,7 @@ var handleSquareClick = function(event, board) {
 
     var movedBoard = getMovedBoard(squareNumber, board);
 
-    setTimeout(function() { renderBoard(movedBoard); }, 500)
+    setTimeout(function() { renderBoard(movedBoard); }, 300)
 
     var hasWon = checkWinState(board);
     if (hasWon) {
