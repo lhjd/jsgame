@@ -201,7 +201,7 @@ var renderBoard = function(board) {
     interfaceDiv.innerHTML = "";
 
     var btnRowDiv = document.createElement("div");
-    btnRowDiv.classList.add("game-row");
+    btnRowDiv.classList.add("btn-row");
 
     var restartButton = document.createElement("button");
     restartButton.innerText = "Restart";
