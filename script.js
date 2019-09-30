@@ -165,6 +165,10 @@ var handleSquareClick = function(event, board) {
     }
 };
 
+var showHint = function() {
+    console.log("show hint");
+};
+
 // output board object to HTML
 var renderBoard = function(board) {
     var boardDiv = document.createElement("div");
@@ -196,13 +200,24 @@ var renderBoard = function(board) {
     var interfaceDiv = document.querySelector(".interface");
     interfaceDiv.innerHTML = "";
 
+    var btnRowDiv = document.createElement("div");
+    btnRowDiv.classList.add("game-row");
+
     var restartButton = document.createElement("button");
     restartButton.innerText = "Restart";
     restartButton.id = "restart-game-btn";
     restartButton.addEventListener("click", startNewGame);
 
+    var hintButton = document.createElement("button");
+    hintButton.innerText = "Hint";
+    hintButton.id = "hint-btn";
+    hintButton.addEventListener("click", showHint);
+
     interfaceDiv.appendChild(boardDiv);
-    interfaceDiv.appendChild(restartButton);
+
+    btnRowDiv.appendChild(restartButton);
+    btnRowDiv.appendChild(hintButton);
+    interfaceDiv.appendChild(btnRowDiv);
 };
 
 // get a random integer between min and max

@@ -89,7 +89,7 @@
 		font-family: Helvetica, sans-serif;
 		font-size: 3em;
 		color: #FFB13C;
-		text-shadow: 3px 3px #ccc;
+		/*text-shadow: 3px 3px #ccc;*/
 		margin: 10px;
 }
 
@@ -114,6 +114,20 @@
 		border: 2px solid #ccc;
 		color: grey;
 		box-shadow: 5px 5px #ccc;
+		margin: 10px;
+}
+
+#hint-btn {
+		margin-top: 50px;
+		width: 200px;
+		height: 50px;
+		font-family: Helvetica, sans-serif;
+		background-color: white;
+		border-radius: 5px;
+		border: 2px solid #ccc;
+		color: grey;
+		box-shadow: 5px 5px #ccc;
+		margin: 10px;
 }
 
 
