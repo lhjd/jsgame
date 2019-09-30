@@ -52,7 +52,8 @@
 		margin: 15px;
 		box-shadow:
 				0 0 0 5px #817dd1,
-				0 0 0 10px #5c58aa;
+				0 0 0 10px #5c58aa,
+				10px 10px 5px 5px grey;
 }
 
 .hint-game-square {
@@ -63,11 +64,11 @@
 		border: 2px solid #ccc;
 		/*width: 100px;*/
 		/*height: 100px;*/
-		width: 50px;
-		height: 50px;
+		width: 90px;
+		height: 90px;
 		box-sizing: border-box;
 		background-color: white;
-		font-size: 2em;
+		font-size: 2.5em;
 		border-radius: 50%;
 		user-select: none;
 		font-family: Helvetica, sans-serif;

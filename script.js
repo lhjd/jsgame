@@ -1,12 +1,12 @@
-var refBoard = [
-    ["🍣", "🍔"],
-    ["🥞", null],
-];
 // var refBoard = [
-//     ["🍣", "🧀", "🥪", "🍔", "🧂"],
-//     ["🍴", "🥙", "🥝", "🥑", "🍴"],
-//     ["🧂", "🥨", "🍞", "🥞", null],
+//     ["🍣", "🍔"],
+//     ["🥞", null],
 // ];
+var refBoard = [
+    ["🧀", "🥪", "🍔"],
+    ["🥙", "🥝", "🥑"],
+    ["🥨", "🍞", null],
+];
 
 // get the board with the empty square swapped with the current movable square
 var getBoardWithSquaresSwapped = function(squareIcon, board, currSqLoc) {
@@ -176,6 +176,7 @@ var handleSquareClick = function(event, board) {
 var renderBoard = function(board) {
     var boardDiv = document.createElement("div");
     boardDiv.classList.add("board");
+    boardDiv.style.cursor = "url('img/ketchup.cur'), auto";
 
     for (var i = 0; i < board.length; i++) {
         var rowDiv = document.createElement("div");
@@ -188,7 +189,7 @@ var renderBoard = function(board) {
 
             if (board[i][j] === null) {
                 squareDiv.classList.add("empty");
-                squareDiv.innerText = "🧤";
+                squareDiv.innerText = "🍴";
             }
 
             squareDiv.id = j.toString();
@@ -240,7 +241,7 @@ var renderBoard = function(board) {
 
             if (refBoard[i][j] === null) {
                 hintSquareDiv.classList.add("empty");
-                hintSquareDiv.innerText = "🧤";
+                hintSquareDiv.innerText = "🍴";
             }
 
             // hintSquareDiv.id = j.toString();
