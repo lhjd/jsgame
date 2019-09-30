@@ -1,8 +1,8 @@
 var refBoard = [
-    [1, 2, 3, 4],
-    [5, 6, 7, 8],
-    [9, 10, 11, null],
-    // [9, 10, 11, 12],
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+    [10, 11, null]
     // [13, 14, 15, null]
 ];
 
@@ -44,7 +44,6 @@ var getEmptySquareLocation = function(board) {
 var checkMovableSquare = function(squareNumber, board) {
     var emptSqLoc = getEmptySquareLocation(board);
     var currSqLoc = getCurrentSquareLocation(squareNumber, board);
-
     var emptSqLocX = emptSqLoc[0];
     var emptSqLocY = emptSqLoc[1];
     var currSqLocX = currSqLoc[0];
@@ -75,7 +74,7 @@ var getMovedBoard = function(squareNumber, board) {
 };
 
 
-var getRefBoad = function() {
+var getRefBoard = function() {
     var board = [];
     board = refBoard.map(row => row.slice());
 
@@ -83,7 +82,7 @@ var getRefBoad = function() {
 };
 
 var checkWinState = function(board) {
-    var refBoard = getRefBoad();
+    var refBoard = getRefBoard();
     var currBoardString = board.toString();
     var refBoardString = refBoard.toString();
 
@@ -127,14 +126,13 @@ var renderBoard = function(board) {
     var interfaceDiv = document.querySelector(".interface");
     interfaceDiv.innerHTML = "";
 
-    interfaceDiv.appendChild(boardDiv);
-
     var restartButton = document.createElement("button");
     restartButton.innerText = "Restart";
     restartButton.id = "restart-game-btn";
-    restartButton.addEventListener("click", function() { startNewGame(board); });
+    restartButton.addEventListener("click", startNewGame);
 
-    document.querySelector(".board").after(restartButton);
+    interfaceDiv.appendChild(boardDiv);
+    interfaceDiv.appendChild(restartButton);
 };
 
 function getRandomInt(min, max) {
@@ -145,11 +143,11 @@ function getRandomInt(min, max) {
 
 var getScrambledBoard = function(startingBoard) {
     var boardSize = startingBoard.length;
-    var randomSquareNumber = getRandomInt(1, (boardSize * boardSize) - 1);
+    var randomSquareNumber = getRandomInt(1, (startingBoard.length * startingBoard[0].length) - 1);
     var scrambledBoard = getMovedBoard(randomSquareNumber, startingBoard);
 
     for (var i = 0; i < 500; i++) {
-        randomSquareNumber = getRandomInt(1, (boardSize * boardSize) - 1);
+        randomSquareNumber = getRandomInt(1, (startingBoard.length * startingBoard[0].length) - 1);
         scrambledBoard = getMovedBoard(randomSquareNumber, scrambledBoard);
     }
 
@@ -157,15 +155,11 @@ var getScrambledBoard = function(startingBoard) {
 };
 
 // set up a new game
-var startNewGame = function(refBoard) {
-    var startingBoard = [];
-
-    startingBoard = refBoard.map(row => row.slice());
-
+var startNewGame = function() {
+    var startingBoard = getRefBoard();
     var scrambledBoard = getScrambledBoard(startingBoard);
-
     renderBoard(scrambledBoard);
 };
 
 var newGameBtn = document.querySelector("#new-game-btn");
-newGameBtn.addEventListener("click", function() { startNewGame(refBoard);});
+newGameBtn.addEventListener("click", startNewGame);
