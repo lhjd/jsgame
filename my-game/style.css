@@ -24,8 +24,13 @@
 	width: 100px;
 	height: 100px;
 	box-sizing: border-box;
-	/*background-color: #75FFC9;*/
+	background-color: #75FFC9;
 	font-size: 2em;
+	border-radius: 5px;
+}
+
+.empty {
+	background-color: black;
 }
 
 .text-center {

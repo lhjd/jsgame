@@ -1,8 +1,7 @@
 var refBoard = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-    [10, 11, null]
+    [1, 2, 3, 4],
+    [5, 6, 7, 8],
+    [9, 10, 11, null],
     // [13, 14, 15, null]
 ];
 
@@ -81,6 +80,7 @@ var getRefBoard = function() {
     return board;
 };
 
+// check for winning state
 var checkWinState = function(board) {
     var refBoard = getRefBoard();
     var currBoardString = board.toString();
@@ -91,6 +91,7 @@ var checkWinState = function(board) {
     }
 };
 
+// event listener when a square is clicked
 var handleSquareClick = function(event, board) {
     var squareNumber = parseInt(event.target.innerText);
 
@@ -104,6 +105,7 @@ var handleSquareClick = function(event, board) {
     }
 };
 
+// output board object to HTML
 var renderBoard = function(board) {
     var boardDiv = document.createElement("div");
     boardDiv.classList.add("board");
@@ -114,6 +116,9 @@ var renderBoard = function(board) {
         for (var j = 0; j < board[0].length; j++) {
             var squareDiv = document.createElement("div");
             squareDiv.classList.add("square");
+            if (board[i][j] === null) {
+                squareDiv.classList.add("empty");
+            }
             squareDiv.innerText = board[i][j];
             squareDiv.addEventListener("click", function(event) {
                 handleSquareClick(event, board);
@@ -135,19 +140,24 @@ var renderBoard = function(board) {
     interfaceDiv.appendChild(restartButton);
 };
 
+// get a random integer between min and max
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// get a scrambled board
 var getScrambledBoard = function(startingBoard) {
-    var boardSize = startingBoard.length;
-    var randomSquareNumber = getRandomInt(1, (startingBoard.length * startingBoard[0].length) - 1);
+    var boardWidth = startingBoard.length;
+    var boardHeight = startingBoard[0].length;
+
+    // get a random number between 1 and the number before null
+    var randomSquareNumber = getRandomInt(1, (boardWidth * boardHeight) - 1);
     var scrambledBoard = getMovedBoard(randomSquareNumber, startingBoard);
 
     for (var i = 0; i < 500; i++) {
-        randomSquareNumber = getRandomInt(1, (startingBoard.length * startingBoard[0].length) - 1);
+        randomSquareNumber = getRandomInt(1, (boardWidth * boardHeight) - 1);
         scrambledBoard = getMovedBoard(randomSquareNumber, scrambledBoard);
     }
 
@@ -156,10 +166,16 @@ var getScrambledBoard = function(startingBoard) {
 
 // set up a new game
 var startNewGame = function() {
+    // get a copy of refBoard
     var startingBoard = getRefBoard();
+
+    // get a scrambled board
     var scrambledBoard = getScrambledBoard(startingBoard);
+
+    // render the scrambled board
     renderBoard(scrambledBoard);
 };
 
+// add event listener to the new game button
 var newGameBtn = document.querySelector("#new-game-btn");
 newGameBtn.addEventListener("click", startNewGame);
