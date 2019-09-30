@@ -1,7 +1,7 @@
 var refBoard = [
-    ["🍔", "🍔", "🍔", "🍔", "🍔"],
-    ["🍔", "🌭", "🌭", "🌭", "🍔"],
-    ["🍔", "🍔", "🍔", "🍔", null],
+    ["🍣", "🧀", "🥪", "🍔", "🧂"],
+    ["🍴", "🥙", "🥝", "🥑", "🍴"],
+    ["🧂", "🥨", "🍞", "🥞", null],
 ];
 
 // get the board with the empty square swapped with the current movable square
@@ -181,8 +181,9 @@ var renderBoard = function(board) {
 
             if (board[i][j] === null) {
                 squareDiv.classList.add("empty");
-                squareDiv.innerText = "🍴";
+                squareDiv.innerText = "🧤";
             }
+
             squareDiv.id = j.toString();
             squareDiv.addEventListener("click", function(event) {
                 handleSquareClick(event, board);
