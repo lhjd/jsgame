@@ -33,6 +33,26 @@
 	background-color: black;
 }
 
+.move-left {
+	transition: all 0.5s ease;
+	transform: translate(-100px, 0);
+}
+
+.move-right {
+	transition: all 0.5s ease;
+	transform: translate(100px, 0);
+}
+
+.move-top {
+	transition: all 0.5s ease;
+	transform: translate(0, -100px);
+}
+
+.move-bottom {
+	transition: all 0.5s ease;
+	transform: translate(0, 100px);
+}
+
 .text-center {
 	text-align: center;
 }

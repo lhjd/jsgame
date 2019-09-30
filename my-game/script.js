@@ -5,6 +5,7 @@ var refBoard = [
     // [13, 14, 15, null]
 ];
 
+// get the board with the empty square swapped with the current movable square
 var getBoardWithSquaresSwapped = function(squareNumber, board) {
     var emptSqLoc = getEmptySquareLocation(board);
     var currSqLoc = getCurrentSquareLocation(squareNumber, board);
@@ -20,6 +21,7 @@ var getBoardWithSquaresSwapped = function(squareNumber, board) {
     return board;
 };
 
+// get the current square location
 var getCurrentSquareLocation = function(squareNumber, board) {
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board[0].length; j++) {
@@ -30,6 +32,7 @@ var getCurrentSquareLocation = function(squareNumber, board) {
     }
 };
 
+// get the location of the empty square
 var getEmptySquareLocation = function(board) {
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board[0].length; j++) {
@@ -40,6 +43,7 @@ var getEmptySquareLocation = function(board) {
     }
 };
 
+// check if a square is movable
 var checkMovableSquare = function(squareNumber, board) {
     var emptSqLoc = getEmptySquareLocation(board);
     var currSqLoc = getCurrentSquareLocation(squareNumber, board);
@@ -48,8 +52,10 @@ var checkMovableSquare = function(squareNumber, board) {
     var currSqLocX = currSqLoc[0];
     var currSqLocY = currSqLoc[1];
 
+    // if the current square is on the left or the right side of the empty square
     if (emptSqLocX === currSqLocX && (emptSqLocY === currSqLocY + 1 || emptSqLocY === currSqLocY - 1)) {
         return true;
+        // or if the current square is on the top or the bottom of the empty square
     } else if (emptSqLocY === currSqLocY && (emptSqLocX === currSqLocX + 1 || emptSqLocX === currSqLocX - 1)) {
         return true;
     } else {
@@ -57,6 +63,7 @@ var checkMovableSquare = function(squareNumber, board) {
     }
 };
 
+// get board after a square is moved
 var getMovedBoard = function(squareNumber, board) {
 
     if (squareNumber) {
@@ -72,7 +79,7 @@ var getMovedBoard = function(squareNumber, board) {
     }
 };
 
-
+// get reference board
 var getRefBoard = function() {
     var board = [];
     board = refBoard.map(row => row.slice());
@@ -91,13 +98,61 @@ var checkWinState = function(board) {
     }
 };
 
+var animateSquare = function(event, board) {
+    var emptSqLoc = getEmptySquareLocation(board);
+    var emptSqLocX = emptSqLoc[0];
+    var emptSqLocY = emptSqLoc[1];
+
+    var squareNumber = parseInt(event.target.innerText);
+
+    // if empty square is clicked, do nothing
+    if (!squareNumber) {
+        return;
+    }
+
+    var currentSquareDiv = event.target;
+
+    var currSqLoc = getCurrentSquareLocation(squareNumber, board);
+    var currSqLocX = currSqLoc[0];
+    var currSqLocY = currSqLoc[1];
+
+
+    var boardWidth = board[0].length;
+    var boardHeight = board.length;
+
+    var emptySquareDiv = document.querySelector(".empty");
+
+        // if current square is on the left of the empty square
+    if (emptSqLocX === currSqLocX && emptSqLocY === currSqLocY + 1) {
+        currentSquareDiv.classList.add("move-right");
+        emptySquareDiv.classList.add("move-left");
+        // if current square is on the right of the empty square
+    } else if (emptSqLocX === currSqLocX && emptSqLocY === currSqLocY - 1) {
+        currentSquareDiv.classList.add("move-left");
+        emptySquareDiv.classList.add("move-right");
+        // if current square is on top of the empty square
+    } else if (emptSqLocY === currSqLocY && emptSqLocX === currSqLocX + 1) {
+        currentSquareDiv.classList.add("move-bottom");
+        emptySquareDiv.classList.add("move-top");
+        // if current square is on bottom of the empty square
+    } else if (emptSqLocY === currSqLocY && emptSqLocX === currSqLocX - 1) {
+        currentSquareDiv.classList.add("move-top");
+        emptySquareDiv.classList.add("move-bottom");
+    } else {}
+
+
+
+};
+
 // event listener when a square is clicked
 var handleSquareClick = function(event, board) {
     var squareNumber = parseInt(event.target.innerText);
 
+    animateSquare(event, board);
+
     var movedBoard = getMovedBoard(squareNumber, board);
 
-    renderBoard(movedBoard);
+    setTimeout(function() { renderBoard(movedBoard); }, 500)
 
     var hasWon = checkWinState(board);
     if (hasWon) {
