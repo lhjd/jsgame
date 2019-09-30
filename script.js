@@ -167,7 +167,8 @@ var handleSquareClick = function(event, board) {
 
     var hasWon = checkWinState(board);
     if (hasWon) {
-        setTimeout(function() { alert("You Won!"); }, 500);
+        // setTimeout(function() { alert("You Won!"); }, 500);
+        setTimeout(function() { Swal.fire("Yay!","Lunch is ready!","success"); }, 500);
     }
 };
 
