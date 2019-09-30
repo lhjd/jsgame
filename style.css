@@ -54,6 +54,7 @@
 				0 0 0 5px #817dd1,
 				0 0 0 10px #5c58aa,
 				10px 10px 5px 5px grey;
+  	text-shadow: 3px 3px 2px grey;
 }
 
 .hint-game-square {
