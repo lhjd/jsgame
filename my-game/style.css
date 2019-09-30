@@ -22,8 +22,10 @@
 	justify-content: center;
 	align-items: center;
 	border: 2px solid black;
-	width: 100px;
-	height: 100px;
+	/*width: 100px;*/
+	/*height: 100px;*/
+	width: 150px;
+	height: 150px;
 	box-sizing: border-box;
 	background-color: #DEED00;
 	font-size: 2em;
@@ -38,22 +40,22 @@
 
 .move-left {
 	transition: all 0.3s ease;
-	transform: translate(-100px, 0);
+	transform: translate(-150px, 0);
 }
 
 .move-right {
 	transition: all 0.3s ease;
-	transform: translate(100px, 0);
+	transform: translate(150px, 0);
 }
 
 .move-top {
 	transition: all 0.3s ease;
-	transform: translate(0, -100px);
+	transform: translate(0, -150px);
 }
 
 .move-bottom {
 	transition: all 0.3s ease;
-	transform: translate(0, 100px);
+	transform: translate(0, 150px);
 }
 
 .text-center {
