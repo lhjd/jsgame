@@ -2,37 +2,31 @@ var refBoard = [
     ["🍔", "🍔", "🍔", "🍔", "🍔"],
     ["🍔", "🌭", "🌭", "🌭", "🍔"],
     ["🍔", "🍔", "🍔", "🍔", null],
-    // [13, 14, 15, null]
 ];
 
-// var refBoard = [
-//     [1, 2, 3, 4],
-//     [5, 6, 7, 8],
-//     [9, 10, 11, null],
-// [13, 14, 15, null]
-// ];
-
 // get the board with the empty square swapped with the current movable square
-var getBoardWithSquaresSwapped = function(squareNumber, board, currSqLoc) {
+var getBoardWithSquaresSwapped = function(squareIcon, board, currSqLoc) {
     var emptSqLoc = getEmptySquareLocation(board);
-    // var currSqLoc = getCurrentSquareLocation(squareNumber, board);
 
     var emptSqLocX = emptSqLoc[0];
     var emptSqLocY = emptSqLoc[1];
     var currSqLocX = currSqLoc[0];
     var currSqLocY = currSqLoc[1];
 
-    board[emptSqLocX][emptSqLocY] = squareNumber;
+    board[emptSqLocX][emptSqLocY] = squareIcon;
     board[currSqLocX][currSqLocY] = null;
 
     return board;
 };
 
 // get the current square location
-var getCurrentSquareLocation = function(squareNumber, board) {
-    for (var i = 0; i < board.length; i++) {
-        for (var j = 0; j < board[0].length; j++) {
-            if (board[i][j] === squareNumber) {
+var getCurrentSquareLocation = function(squareIcon, board) {
+    var boardHeight = board.length;
+    var boardWidth = board[0].length;
+
+    for (var i = 0; i < boardHeight; i++) {
+        for (var j = 0; j < boardWidth; j++) {
+            if (board[i][j] === squareIcon) {
                 return [i, j];
             }
         }
@@ -41,8 +35,11 @@ var getCurrentSquareLocation = function(squareNumber, board) {
 
 // get the location of the empty square
 var getEmptySquareLocation = function(board) {
-    for (var i = 0; i < board.length; i++) {
-        for (var j = 0; j < board[0].length; j++) {
+    var boardHeight = board.length;
+    var boardWidth = board[0].length;
+
+    for (var i = 0; i < boardHeight; i++) {
+        for (var j = 0; j < boardWidth; j++) {
             if (board[i][j] === null) {
                 return [i, j];
             }
@@ -53,10 +50,9 @@ var getEmptySquareLocation = function(board) {
 // check if a square is movable
 var checkMovableSquare = function(currSqLoc, board) {
     var emptSqLoc = getEmptySquareLocation(board);
-    // var currSqLoc = getCurrentSquareLocation(squareNumber, board);
     var emptSqLocX = emptSqLoc[0];
     var emptSqLocY = emptSqLoc[1];
-    // debugger;
+
     var currSqLocX = currSqLoc[0];
     var currSqLocY = currSqLoc[1];
 
@@ -72,12 +68,11 @@ var checkMovableSquare = function(currSqLoc, board) {
 };
 
 // get board after a square is moved
-var getMovedBoard = function(squareNumber, board, currSqLoc) {
-    // debugger;
-    if (squareNumber) {
+var getMovedBoard = function(squareIcon, board, currSqLoc) {
+    if (squareIcon) {
         var isMovableSquare = checkMovableSquare(currSqLoc, board);
         if (isMovableSquare) {
-            var movedBoard = getBoardWithSquaresSwapped(squareNumber, board, currSqLoc);
+            var movedBoard = getBoardWithSquaresSwapped(squareIcon, board, currSqLoc);
             return movedBoard;
         } else {
             return board;
@@ -87,7 +82,7 @@ var getMovedBoard = function(squareNumber, board, currSqLoc) {
     }
 };
 
-// get reference board
+// get a copy of the reference board
 var getRefBoard = function() {
     var board = [];
     board = refBoard.map(row => row.slice());
@@ -107,37 +102,29 @@ var checkWinState = function(board) {
 };
 
 var animateSquare = function(event, board) {
-    // debugger;
     var emptSqLoc = getEmptySquareLocation(board);
     var emptSqLocX = emptSqLoc[0];
     var emptSqLocY = emptSqLoc[1];
 
-    var squareNumber = event.target.innerText;
-    // var squareNumber = parseInt(event.target.innerText);
+    var squareIcon = event.target.innerText;
 
     // if empty square is clicked, do nothing
-    if (!squareNumber) {
+    if (!squareIcon) {
         return;
     }
 
     var currentSquareDiv = event.target;
 
-    // var currSqLoc = getCurrentSquareLocation(squareNumber, board);
-    // var currSqLocX = currSqLoc[0];
-    // var currSqLocY = currSqLoc[1];
-
-    // var squareNumber = event.target.innerText;
     var currSqLocX = parseInt(event.target.parentNode.id);
     var currSqLocY = parseInt(event.target.id);
-    // var currSqLoc = [currSqLocX, currSqLocY];
-
 
     var boardWidth = board[0].length;
     var boardHeight = board.length;
 
-    // if current square is on the left of the empty square
+    // Add CSS classes that animate a div
+        // if current square is on the left of the empty square
     if (emptSqLocX === currSqLocX && emptSqLocY === currSqLocY + 1) {
-        currentSquareDiv.classList.add("move-right"); // emptySquareDiv.classList.add("move-left");
+        currentSquareDiv.classList.add("move-right");
         // if current square is on the right of the empty square
     } else if (emptSqLocX === currSqLocX && emptSqLocY === currSqLocY - 1) {
         currentSquareDiv.classList.add("move-left");
@@ -150,22 +137,19 @@ var animateSquare = function(event, board) {
     } else {
         currentSquareDiv.classList.add("shake");
     }
-
-
-
 };
 
 // event listener when a square is clicked
 var handleSquareClick = function(event, board) {
-    // var squareNumber = parseInt(event.target.innerText);
-    var squareNumber = event.target.innerText;
+    var squareIcon = event.target.innerText;
+
     var currSqLocX = parseInt(event.target.parentNode.id);
     var currSqLocY = parseInt(event.target.id);
     var currSqLoc = [currSqLocX, currSqLocY];
-    // debugger;
+
     animateSquare(event, board);
 
-    var movedBoard = getMovedBoard(squareNumber, board, currSqLoc);
+    var movedBoard = getMovedBoard(squareIcon, board, currSqLoc);
 
     setTimeout(function() { renderBoard(movedBoard); }, 300)
 
@@ -223,24 +207,22 @@ function getRandomInt(min, max) {
 var getScrambledBoard = function(startingBoard) {
     var boardHeight = startingBoard.length;
     var boardWidth = startingBoard[0].length;
-    // debugger;
-    // get a random number between 1 and the number before null
-    // var randomSquareNumber = getRandomInt(1, (boardWidth * boardHeight) - 1);
-    var randomSquareNumberX = getRandomInt(0, boardHeight - 1);
-    var randomSquareNumberY = getRandomInt(0, boardWidth - 1);
-    var randomSquareLoc = [randomSquareNumberX, randomSquareNumberY];
-    var randomSquareNumber = startingBoard[randomSquareNumberX][randomSquareNumberY];
 
-    var scrambledBoard = getMovedBoard(randomSquareNumber, startingBoard, randomSquareLoc);
+    var randomSquareLocX = getRandomInt(0, boardHeight - 1);
+    var randomSquareLocY = getRandomInt(0, boardWidth - 1);
+    var randomSquareLoc = [randomSquareLocX, randomSquareLocY];
+    var randomSquareIcon = startingBoard[randomSquareLocX][randomSquareLocY];
+
+    var scrambledBoard = getMovedBoard(randomSquareIcon, startingBoard, randomSquareLoc);
 
     for (var i = 0; i < 500; i++) {
         // randomSquareNumber = getRandomInt(1, (boardWidth * boardHeight) - 1);
-        randomSquareNumberX = getRandomInt(0, boardHeight - 1);
-        randomSquareNumberY = getRandomInt(0, boardWidth - 1);
-        randomSquareLoc = [randomSquareNumberX, randomSquareNumberY];
-        randomSquareNumber = startingBoard[randomSquareNumberX][randomSquareNumberY];
+        randomSquareLocX = getRandomInt(0, boardHeight - 1);
+        randomSquareLocY = getRandomInt(0, boardWidth - 1);
+        randomSquareLoc = [randomSquareLocX, randomSquareLocY];
+        randomSquareIcon = startingBoard[randomSquareLocX][randomSquareLocY];
 
-        scrambledBoard = getMovedBoard(randomSquareNumber, scrambledBoard, randomSquareLoc);
+        scrambledBoard = getMovedBoard(randomSquareIcon, scrambledBoard, randomSquareLoc);
     }
 
     return scrambledBoard;
