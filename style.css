@@ -1,13 +1,19 @@
 .board {
 		display: flex;
 		flex-direction: column;
-		/*border: 2px solid red;*/
+		/*border: 2px solid #F9772F;*/
 		margin: 0 auto;
 		/*width: 60%;*/
 		/*background-color: brown;*/
 		padding: 10px;
 		background-image: url("img/tile.png");
 		background-repeat: repeat;
+    box-shadow: 1px 1px 0px #F9772F,
+                2px 2px 0px #F9772F,
+                3px 3px 0px #F9772F,
+                4px 4px 0px #F9772F,
+                5px 5px 0px #F9772F,
+                6px 6px 0px #F9772F;
 
 }
 
