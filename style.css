@@ -169,10 +169,20 @@ https://www.w3schools.com/howto/howto_css_shake_image.asp
 
 .shake {
 		/* Start the shake animation and make the animation last for 0.5 seconds */
-		animation: shake 0.5s;
+		animation: shake 0.3s;
 
 		/* When the animation is finished, start again */
 		animation-iteration-count: infinite;
+}
+
+.serve {
+		/* Start the shake animation and make the animation last for 0.5 seconds */
+		animation: serve 10s;
+
+		/* When the animation is finished, start again */
+		animation-iteration-count: 1;
+		animation-timing-function: ease-out;
+		animation-fill-mode: forwards;
 }
 
 @keyframes shake {
@@ -180,58 +190,21 @@ https://www.w3schools.com/howto/howto_css_shake_image.asp
 				transform: translate(0, 0);
 		}
 
-		20% {
-				transform: translate(-5px, 0);
-		}
-
-		40% {
-				transform: translate(5px, 0);
-		}
-
-		60% {
-				transform: translate(0, -5px);
-		}
-
-		80% {
-				transform: translate(0, 5px);
+		50% {
+				transform: translate(-10px, 0);
 		}
 
 		100% {
-				transform: translate(0, 0);
+				transform: translate(10px, 0);
 		}
 }
 
+@keyframes serve {
+		0% {
+				transform: translate(0, 0);
+		}
 
-/*reference
-https://stackoverflow.com/questions/48175922/css-animation-fade-in-fade-out-opacity-on-automated-slideshow
-*/
-.fade-square {
--webkit-animation: fadeSquare 5s;
-animation: fadeSquare 5s;
--moz-animation: fadeSquare 5s;
--o-animation: fadeSquare 5s;
-}
-
-@-webkit-keyframes fadeSquare {
-0% {opacity: 0.2}
-50% {opacity: 1}
-100% {opacity:0.2}
-}
-
-@-moz-keyframes fadeSquare {
-    0% {opacity: 0.2}
-  50% {opacity: 1}
-  100% {opacity:0}
-}
-
-@keyframes fadeSquare {
-  0% {opacity: 1}
-  50% {opacity: 0.5}
-  100%{opacity: 0}
-    }
-@-o-keyframes fadeSquare {
-0% {opacity: 0.2}
-  50% {opacity: 1}
-  100%{opacity: 0.2}
-
+		100% {
+				transform: translate(3000px, 0);
+		}
 }

@@ -1,12 +1,13 @@
-// var refBoard = [
-//     ["🍣", "🍔"],
-//     ["🥞", null],
-// ];
 var refBoard = [
-    ["🧀", "🥪", "🍔"],
-    ["🥙", "🥝", "🥑"],
-    ["🥨", "🍞", null],
+    ["🍣", "🍔"],
+    ["🥞", null],
 ];
+
+// var refBoard = [
+//     ["🧀", "🥪", "🍔"],
+//     ["🥙", "🥝", "🥑"],
+//     ["🥨", "🍞", null],
+// ];
 
 // get the board with the empty square swapped with the current movable square
 var getBoardWithSquaresSwapped = function(squareIcon, board, currSqLoc) {
@@ -151,6 +152,15 @@ var animateSquare = function(event, board) {
     }
 };
 
+var animateClearTable = function() {
+    var plates = document.querySelectorAll(".game-square");
+
+    for (var i = 0; i < plates.length; i++) {
+        plates[i].classList.add("serve");
+    }
+
+};
+
 // event listener when a square is clicked
 var handleSquareClick = function(event, board) {
     var squareIcon = event.target.innerText;
@@ -168,7 +178,9 @@ var handleSquareClick = function(event, board) {
     var hasWon = checkWinState(board);
     if (hasWon) {
         // setTimeout(function() { alert("You Won!"); }, 500);
-        setTimeout(function() { Swal.fire("Yay!","Lunch is ready!","success"); }, 500);
+        setTimeout(function() { animateClearTable(); }, 500);
+        setTimeout(function() { Swal.fire("Yay!","Lunch is ready!","success"); }, 2000);
+
     }
 };
 
@@ -307,3 +319,9 @@ var startNewGame = function() {
 // add event listener to the new game button
 var newGameBtn = document.querySelector("#new-game-btn");
 newGameBtn.addEventListener("click", startNewGame);
+
+// cursor from
+// http://www.cursors-4u.com/
+
+// emoji from
+// https://emojipedia.org/
