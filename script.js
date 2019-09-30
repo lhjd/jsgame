@@ -108,30 +108,36 @@ var checkWinState = function(board) {
     }
 };
 
-var animateSquare = function(event, board) {
+var animateSquare = function(squareIcon, board, currSqLoc) {
     var emptSqLoc = getEmptySquareLocation(board);
     var emptSqLocX = emptSqLoc[0];
     var emptSqLocY = emptSqLoc[1];
 
-    var squareIcon = event.target.innerText;
+    // var squareIcon = event.target.innerText;
 
     // if empty square is clicked, do nothing
     if (!squareIcon) {
         return;
     }
 
-    var currentSquareDiv = event.target;
 
-    var currSqLocX = parseInt(event.target.parentNode.id);
-    var currSqLocY = parseInt(event.target.id);
+    var currSqLocX = currSqLoc[0];
+    var currSqLocY = currSqLoc[1];
+    // var currSqLocX = parseInt(event.target.parentNode.id);
+    // var currSqLocY = parseInt(event.target.id);
 
+    // var currentSquareDiv = event.target;
+
+    var currentSquareDiv = document.querySelectorAll(".game-row")[currSqLocX].childNodes[currSqLocY];
+
+    // debugger;
     var boardWidth = board[0].length;
     var boardHeight = board.length;
 
     var emptyDiv = document.querySelector(".empty");
 
     // Add CSS classes that animate a div
-        // if current square is on the left of the empty square
+    // if current square is on the left of the empty square
     if (emptSqLocX === currSqLocX && emptSqLocY === currSqLocY + 1) {
         currentSquareDiv.classList.add("move-right");
         emptyDiv.classList.add("move-left");
@@ -169,7 +175,7 @@ var handleSquareClick = function(event, board) {
     var currSqLocY = parseInt(event.target.id);
     var currSqLoc = [currSqLocX, currSqLocY];
 
-    animateSquare(event, board);
+    animateSquare(squareIcon, board, currSqLoc);
 
     var movedBoard = getMovedBoard(squareIcon, board, currSqLoc);
 
@@ -179,7 +185,7 @@ var handleSquareClick = function(event, board) {
     if (hasWon) {
         // setTimeout(function() { alert("You Won!"); }, 500);
         setTimeout(function() { animateClearTable(); }, 500);
-        setTimeout(function() { Swal.fire("Yay!","Lunch is ready!","success"); }, 2000);
+        setTimeout(function() { Swal.fire("Yay!", "Lunch is ready!", "success"); }, 2000);
 
     }
 };
@@ -244,7 +250,7 @@ var renderBoard = function(board) {
 
     for (var i = 0; i < hintBoard.length; i++) {
         var hintRowDiv = document.createElement("div");
-        hintRowDiv.classList.add("game-row");
+        hintRowDiv.classList.add("hint-game-row");
         hintRowDiv.id = i.toString();
         for (var j = 0; j < hintBoard[0].length; j++) {
             var hintSquareDiv = document.createElement("div");
@@ -268,7 +274,6 @@ var renderBoard = function(board) {
     var modalBodyDiv = document.querySelector(".modal-body");
     modalBodyDiv.innerHTML = "";
     modalBodyDiv.appendChild(hintBoardDiv);
-
 
 };
 
@@ -304,6 +309,86 @@ var getScrambledBoard = function(startingBoard) {
     return scrambledBoard;
 };
 
+var getKeyboardMovedBoard = function(squareIcon, board, currSqLoc) {
+    if (squareIcon) {
+        var isMovableSquare = checkMovableSquare(currSqLoc, board);
+        if (isMovableSquare) {
+            var movedBoard = getBoardWithSquaresSwapped(squareIcon, board, currSqLoc);
+            return movedBoard;
+        } else {
+            return board;
+        }
+    } else {
+        return board;
+    }
+};
+
+var moveIcon = function(event, board) {
+    var key = event.key;
+    var emptySqLoc = getEmptySquareLocation(board);
+    var currSqLoc = [];
+    var squareIcon = null;
+    var movedBoard = [];
+    var boardHeight = board.length;
+    var boardWidth = board[0].length;
+
+    if (key === "ArrowLeft") {
+        currSqLoc[0] = emptySqLoc[0];
+        currSqLoc[1] = emptySqLoc[1] - 1;
+        if (currSqLoc.some(index => index < 0)) {
+            console.log("not moving!");
+            return;
+        } else {
+            squareIcon = board[currSqLoc[0]][currSqLoc[1]];
+            animateSquare(squareIcon, board, currSqLoc);
+            movedBoard = getMovedBoard(squareIcon, board, currSqLoc);
+        }
+    } else if (key === "ArrowRight") {
+        currSqLoc[0] = emptySqLoc[0];
+        currSqLoc[1] = emptySqLoc[1] + 1;
+        if (currSqLoc.some(index => index > boardWidth - 1)) {
+            console.log("not moving!");
+            return;
+        } else {
+            squareIcon = board[currSqLoc[0]][currSqLoc[1]];
+            animateSquare(squareIcon, board, currSqLoc);
+            movedBoard = getMovedBoard(squareIcon, board, currSqLoc);
+        }
+    } else if (key === "ArrowUp") {
+        currSqLoc[1] = emptySqLoc[1];
+        currSqLoc[0] = emptySqLoc[0] - 1;
+        if (currSqLoc.some(index => index < 0)) {
+            console.log("not moving!");
+            return;
+        } else {
+            squareIcon = board[currSqLoc[0]][currSqLoc[1]];
+            animateSquare(squareIcon, board, currSqLoc);
+            movedBoard = getMovedBoard(squareIcon, board, currSqLoc);
+        }
+    } else if (key === "ArrowDown") {
+        currSqLoc[1] = emptySqLoc[1];
+        currSqLoc[0] = emptySqLoc[0] + 1;
+        if (currSqLoc.some(index => index > boardHeight - 1)) {
+            console.log("not moving!");
+            return;
+        } else {
+            squareIcon = board[currSqLoc[0]][currSqLoc[1]];
+            animateSquare(squareIcon, board, currSqLoc);
+            movedBoard = getMovedBoard(squareIcon, board, currSqLoc);
+        }
+    } else {
+        return;
+    }
+
+    // animateSquare(squareIcon, board, currSqLoc);
+    setTimeout(function() { renderBoard(movedBoard); }, 300)
+    var hasWon = checkWinState(board);
+    if (hasWon) {
+        setTimeout(function() { animateClearTable(); }, 500);
+        setTimeout(function() { Swal.fire("Yay!", "Lunch is ready!", "success"); }, 2000);
+    }
+};
+
 // set up a new game
 var startNewGame = function() {
     // get a copy of refBoard
@@ -312,6 +397,8 @@ var startNewGame = function() {
     // get a scrambled board
     var scrambledBoard = getScrambledBoard(startingBoard);
 
+    document.addEventListener("keydown", function(event) { moveIcon(event, scrambledBoard); });
+
     // render the scrambled board
     renderBoard(scrambledBoard);
 };
@@ -319,6 +406,8 @@ var startNewGame = function() {
 // add event listener to the new game button
 var newGameBtn = document.querySelector("#new-game-btn");
 newGameBtn.addEventListener("click", startNewGame);
+
+
 
 // cursor from
 // http://www.cursors-4u.com/

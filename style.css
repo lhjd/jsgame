@@ -24,6 +24,14 @@
 		box-sizing: border-box;
 }
 
+.hint-game-row {
+		display: flex;
+		flex-direction: row;
+		/*border: 2px solid green;*/
+		justify-content: center;
+		box-sizing: border-box;
+}
+
 .btn-row {
 		display: flex;
 		flex-direction: row;
