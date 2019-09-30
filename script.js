@@ -211,6 +211,8 @@ var renderBoard = function(board) {
     var hintButton = document.createElement("button");
     hintButton.innerText = "Hint";
     hintButton.id = "hint-btn";
+    hintButton.setAttribute("data-toggle", "modal");
+    hintButton.setAttribute("data-target", "#exampleModal");
     hintButton.addEventListener("click", showHint);
 
     interfaceDiv.appendChild(boardDiv);
@@ -218,6 +220,41 @@ var renderBoard = function(board) {
     btnRowDiv.appendChild(restartButton);
     btnRowDiv.appendChild(hintButton);
     interfaceDiv.appendChild(btnRowDiv);
+
+
+    var hintBoard = getRefBoard();
+
+    var hintBoardDiv = document.createElement("div");
+    hintBoardDiv.classList.add("board");
+
+    for (var i = 0; i < hintBoard.length; i++) {
+        var hintRowDiv = document.createElement("div");
+        hintRowDiv.classList.add("game-row");
+        hintRowDiv.id = i.toString();
+        for (var j = 0; j < hintBoard[0].length; j++) {
+            var hintSquareDiv = document.createElement("div");
+            hintSquareDiv.classList.add("hint-game-square");
+            hintSquareDiv.innerText = hintBoard[i][j];
+
+            if (refBoard[i][j] === null) {
+                hintSquareDiv.classList.add("empty");
+                hintSquareDiv.innerText = "🧤";
+            }
+
+            // hintSquareDiv.id = j.toString();
+            // hintSquareDiv.addEventListener("click", function(event) {
+            //     handleSquareClick(event, board);
+            // });
+            hintRowDiv.appendChild(hintSquareDiv);
+        }
+        hintBoardDiv.appendChild(hintRowDiv);
+    }
+
+    var modalBodyDiv = document.querySelector(".modal-body");
+    modalBodyDiv.innerHTML = "";
+    modalBodyDiv.appendChild(hintBoardDiv);
+
+
 };
 
 // get a random integer between min and max
