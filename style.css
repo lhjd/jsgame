@@ -14,10 +14,9 @@
                 4px 4px 0px #F9772F,
                 5px 5px 0px #F9772F,
                 6px 6px 0px #F9772F;
-
 }
 
-.row {
+.game-row {
 		display: flex;
 		flex-direction: row;
 		/*border: 2px solid green;*/
@@ -25,7 +24,7 @@
 		box-sizing: border-box;
 }
 
-.square {
+.game-square {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -88,9 +87,10 @@
 
 .game-title {
 		font-family: Helvetica, sans-serif;
-		font-size: 40px;
+		font-size: 3em;
 		color: #FFB13C;
 		text-shadow: 3px 3px #ccc;
+		margin: 10px;
 }
 
 #new-game-btn {

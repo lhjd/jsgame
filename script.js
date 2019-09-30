@@ -172,11 +172,11 @@ var renderBoard = function(board) {
 
     for (var i = 0; i < board.length; i++) {
         var rowDiv = document.createElement("div");
-        rowDiv.classList.add("row");
+        rowDiv.classList.add("game-row");
         rowDiv.id = i.toString();
         for (var j = 0; j < board[0].length; j++) {
             var squareDiv = document.createElement("div");
-            squareDiv.classList.add("square");
+            squareDiv.classList.add("game-square");
             squareDiv.innerText = board[i][j];
 
             if (board[i][j] === null) {
