@@ -199,3 +199,38 @@ https://www.w3schools.com/howto/howto_css_shake_image.asp
 				transform: translate(0, 0);
 		}
 }
+
+
+/*reference
+https://stackoverflow.com/questions/48175922/css-animation-fade-in-fade-out-opacity-on-automated-slideshow
+*/
+.fade-square {
+-webkit-animation: fadeSquare 5s;
+animation: fadeSquare 5s;
+-moz-animation: fadeSquare 5s;
+-o-animation: fadeSquare 5s;
+}
+
+@-webkit-keyframes fadeSquare {
+0% {opacity: 0.2}
+50% {opacity: 1}
+100% {opacity:0.2}
+}
+
+@-moz-keyframes fadeSquare {
+    0% {opacity: 0.2}
+  50% {opacity: 1}
+  100% {opacity:0}
+}
+
+@keyframes fadeSquare {
+  0% {opacity: 1}
+  50% {opacity: 0.5}
+  100%{opacity: 0}
+    }
+@-o-keyframes fadeSquare {
+0% {opacity: 0.2}
+  50% {opacity: 1}
+  100%{opacity: 0.2}
+
+}

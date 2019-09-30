@@ -1,8 +1,12 @@
 var refBoard = [
-    ["🍣", "🧀", "🥪", "🍔", "🧂"],
-    ["🍴", "🥙", "🥝", "🥑", "🍴"],
-    ["🧂", "🥨", "🍞", "🥞", null],
+    ["🍣", "🍔"],
+    ["🥞", null],
 ];
+// var refBoard = [
+//     ["🍣", "🧀", "🥪", "🍔", "🧂"],
+//     ["🍴", "🥙", "🥝", "🥑", "🍴"],
+//     ["🧂", "🥨", "🍞", "🥞", null],
+// ];
 
 // get the board with the empty square swapped with the current movable square
 var getBoardWithSquaresSwapped = function(squareIcon, board, currSqLoc) {
@@ -98,6 +102,8 @@ var checkWinState = function(board) {
 
     if (currBoardString === refBoardString) {
         return true;
+    } else {
+        return false;
     }
 };
 
@@ -161,12 +167,8 @@ var handleSquareClick = function(event, board) {
 
     var hasWon = checkWinState(board);
     if (hasWon) {
-        setTimeout(function() { alert("You Won!"); }, 0);
+        setTimeout(function() { alert("You Won!"); }, 500);
     }
-};
-
-var showHint = function() {
-    console.log("show hint");
 };
 
 // output board object to HTML
@@ -213,7 +215,6 @@ var renderBoard = function(board) {
     hintButton.id = "hint-btn";
     hintButton.setAttribute("data-toggle", "modal");
     hintButton.setAttribute("data-target", "#exampleModal");
-    hintButton.addEventListener("click", showHint);
 
     interfaceDiv.appendChild(boardDiv);
 
