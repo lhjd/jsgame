@@ -1,14 +1,3 @@
-// var refBoard = [
-//     ["🍣", "🍔"],
-//     ["🥞", null],
-// ];
-
-// var refBoard = [
-//     ["🧀", "🍔", "🍔"],
-//     ["🥙", "🥝", "🥑"],
-//     ["🥨", "🍞", null],
-// ];
-
 var level = 0;
 
 // get the board with the empty square swapped with the current movable square
@@ -89,14 +78,6 @@ var getMovedBoard = function(squareIcon, board, currSqLoc) {
     }
 };
 
-// get a copy of the reference board
-// var getRefBoard = function() {
-//     var board = [];
-//     board = refBoard.map(row => row.slice());
-
-//     return board;
-// };
-
 // check for winning state
 var checkWinState = function(board) {
     var refBoard = getBoardforLevel();
@@ -110,29 +91,24 @@ var checkWinState = function(board) {
     }
 };
 
+// animate the swapping of squares by adding CSS classes
 var animateSquare = function(squareIcon, board, currSqLoc) {
+    // empty square location is where null is
     var emptSqLoc = getEmptySquareLocation(board);
     var emptSqLocX = emptSqLoc[0];
     var emptSqLocY = emptSqLoc[1];
-
-    // var squareIcon = event.target.innerText;
 
     // if empty square is clicked, do nothing
     if (!squareIcon) {
         return;
     }
 
-
     var currSqLocX = currSqLoc[0];
     var currSqLocY = currSqLoc[1];
-    // var currSqLocX = parseInt(event.target.parentNode.id);
-    // var currSqLocY = parseInt(event.target.id);
 
-    // var currentSquareDiv = event.target;
-
+    // retrieve the current square div using game-row id and game-square id
     var currentSquareDiv = document.querySelectorAll(".game-row")[currSqLocX].childNodes[currSqLocY];
 
-    // debugger;
     var boardWidth = board[0].length;
     var boardHeight = board.length;
 
@@ -160,13 +136,13 @@ var animateSquare = function(squareIcon, board, currSqLoc) {
     }
 };
 
+// animate the clearing of plates
 var animateClearTable = function() {
     var plates = document.querySelectorAll(".game-square");
 
     for (var i = 0; i < plates.length; i++) {
         plates[i].classList.add("serve");
     }
-
 };
 
 // event listener when a square is clicked
@@ -187,42 +163,47 @@ var handleSquareClick = function(event, board) {
     if (hasWon) {
         timer.stop()
         level++;
-        // setTimeout(function() { alert("You Won!"); }, 500);
         setTimeout(function() { animateClearTable(); }, 500);
-        // setTimeout(function() { Swal.fire("Yay!", "Lunch is ready!", "success"); }, 2000);
         setTimeout(function() {
             Swal.fire({
                 type: 'success',
                 title: 'yay!',
                 text: 'lunch is ready!',
                 onClose: startNewGame,
-                // footer: '<a href>Why do I have this issue?</a>'
             })
         }, 2000);
-        // startNewGame();
     }
 };
 
 // output board object to HTML
 var renderBoard = function(board) {
+    var boardWidth = board[0].length;
+    var boardHeight = board.length;
+
     var boardDiv = document.createElement("div");
     boardDiv.classList.add("board");
     boardDiv.style.cursor = "url('img/ketchup.cur'), auto";
 
-    for (var i = 0; i < board.length; i++) {
+    for (var i = 0; i < boardHeight; i++) {
+        // create row div
         var rowDiv = document.createElement("div");
         rowDiv.classList.add("game-row");
+        // add id to row div
         rowDiv.id = i.toString();
-        for (var j = 0; j < board[0].length; j++) {
+
+        for (var j = 0; j < boardWidth; j++) {
+            // create square div
             var squareDiv = document.createElement("div");
             squareDiv.classList.add("game-square");
             squareDiv.innerText = board[i][j];
 
+            // replace null with emoji
             if (board[i][j] === null) {
                 squareDiv.classList.add("empty");
                 squareDiv.innerText = "🍴";
             }
 
+            // add id to square div
             squareDiv.id = j.toString();
             squareDiv.addEventListener("click", function(event) {
                 handleSquareClick(event, board);
@@ -232,20 +213,25 @@ var renderBoard = function(board) {
         boardDiv.appendChild(rowDiv);
     }
 
+    // clear interface div
     var interfaceDiv = document.querySelector(".interface");
     interfaceDiv.innerHTML = "";
 
+    // create row div for restart and hint buttons
     var btnRowDiv = document.createElement("div");
     btnRowDiv.classList.add("btn-row");
 
+    // create restart button
     var restartButton = document.createElement("button");
     restartButton.innerText = "restart";
     restartButton.id = "restart-game-btn";
     restartButton.addEventListener("click", startNewGame);
 
+    // create hint button
     var hintButton = document.createElement("button");
     hintButton.innerText = "hint";
     hintButton.id = "hint-btn";
+    // set attributes according to Bootstrap modal
     hintButton.setAttribute("data-toggle", "modal");
     hintButton.setAttribute("data-target", "#exampleModal");
 
@@ -255,9 +241,10 @@ var renderBoard = function(board) {
     btnRowDiv.appendChild(hintButton);
     interfaceDiv.appendChild(btnRowDiv);
 
-
+    // get a board for use in hint modal
     var hintBoard = getBoardforLevel();
 
+    // create divs for use in hint modal
     var hintBoardDiv = document.createElement("div");
     hintBoardDiv.classList.add("board");
 
@@ -274,20 +261,15 @@ var renderBoard = function(board) {
                 hintSquareDiv.classList.add("empty");
                 hintSquareDiv.innerText = "🍴";
             }
-
-            // hintSquareDiv.id = j.toString();
-            // hintSquareDiv.addEventListener("click", function(event) {
-            //     handleSquareClick(event, board);
-            // });
             hintRowDiv.appendChild(hintSquareDiv);
         }
         hintBoardDiv.appendChild(hintRowDiv);
     }
 
+    // clear hint modal window and show hint board
     var modalBodyDiv = document.querySelector(".modal-body");
     modalBodyDiv.innerHTML = "";
     modalBodyDiv.appendChild(hintBoardDiv);
-
 };
 
 // get a random integer between min and max
@@ -322,6 +304,7 @@ var getScrambledBoard = function(startingBoard) {
     return scrambledBoard;
 };
 
+// get board after keyboard has moved the icon
 var getKeyboardMovedBoard = function(squareIcon, board, currSqLoc) {
     if (squareIcon) {
         var isMovableSquare = checkMovableSquare(currSqLoc, board);
@@ -336,6 +319,7 @@ var getKeyboardMovedBoard = function(squareIcon, board, currSqLoc) {
     }
 };
 
+// move icon using keyboard
 var moveIcon = function(event, board) {
     var key = event.key;
     var emptySqLoc = getEmptySquareLocation(board);
@@ -408,7 +392,7 @@ var moveIcon = function(event, board) {
     }
 };
 
-
+// get board according to current level
 var getBoardforLevel = function() {
     // console.log("getting board for this level!");
     // console.log("board for this level: ", levels[level]);
@@ -420,14 +404,9 @@ var getBoardforLevel = function() {
 
 // set up a new game
 var startNewGame = function() {
-    // level = 0;
-
     startTimer();
 
-    // get a copy of refBoard
-    // var startingBoard = getRefBoard();
     var startingBoard = getBoardforLevel();
-
 
     // get a scrambled board
     var scrambledBoard = getScrambledBoard(startingBoard);
@@ -441,16 +420,6 @@ var startNewGame = function() {
 // add event listener to the new game button
 var newGameBtn = document.querySelector("#new-game-btn");
 newGameBtn.addEventListener("click", startNewGame);
-
-// cursor from
-// http://www.cursors-4u.com/
-
-// emoji from
-// https://emojipedia.org/
-
-
-//https://albert-gonzalez.github.io/easytimer.js/
-//https://github.com/albert-gonzalez/easytimer.js
 
 var timer = new easytimer.Timer();
 
@@ -475,3 +444,14 @@ var startTimer = function() {
 
     });
 };
+
+// credits
+// ketchup cursor from
+// http://www.cursors-4u.com/
+
+// emoji from
+// https://emojipedia.org/
+
+// timer from
+// https://albert-gonzalez.github.io/easytimer.js/
+// https://github.com/albert-gonzalez/easytimer.js
