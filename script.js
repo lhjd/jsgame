@@ -428,7 +428,7 @@ var timer = new easytimer.Timer();
 var startTimer = function() {
     timer.stop();
 
-    timer.start({ countdown: true, startValues: { seconds: 3 } });
+    timer.start({ countdown: true, startValues: { seconds: 120 } });
     $('#countdownExample .values').html(timer.getTimeValues().toString());
     timer.addEventListener('secondsUpdated', function(e) {
         $('#countdownExample .values').html(timer.getTimeValues().toString());
