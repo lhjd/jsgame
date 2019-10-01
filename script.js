@@ -181,7 +181,7 @@ var renderBoard = function(board) {
     var boardHeight = board.length;
 
     var boardDiv = document.createElement("div");
-    boardDiv.classList.add("board");
+    boardDiv.classList.add("board", "row");
     boardDiv.style.cursor = "url('img/ketchup.cur'), auto";
 
     for (var i = 0; i < boardHeight; i++) {
@@ -219,7 +219,7 @@ var renderBoard = function(board) {
 
     // create row div for restart and hint buttons
     var btnRowDiv = document.createElement("div");
-    btnRowDiv.classList.add("btn-row");
+    btnRowDiv.classList.add("btn-row", "row");
 
     // create restart button
     var restartButton = document.createElement("button");
