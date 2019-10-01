@@ -392,6 +392,7 @@ var moveIcon = function(event, board) {
 
 // set up a new game
 var startNewGame = function() {
+
     startTimer();
 
     // get a copy of refBoard
@@ -422,19 +423,23 @@ newGameBtn.addEventListener("click", startNewGame);
 //https://albert-gonzalez.github.io/easytimer.js/
 //https://github.com/albert-gonzalez/easytimer.js
 
+var timer = new easytimer.Timer();
+
 var startTimer = function() {
-    var timer = new easytimer.Timer();
-    timer.start({ countdown: true, startValues: { seconds: 60 } });
+    timer.stop();
+
+    timer.start({ countdown: true, startValues: { seconds: 3 } });
     $('#countdownExample .values').html(timer.getTimeValues().toString());
     timer.addEventListener('secondsUpdated', function(e) {
         $('#countdownExample .values').html(timer.getTimeValues().toString());
     });
     timer.addEventListener('targetAchieved', function(e) {
-        $('#countdownExample .values').html('');
+        timer.stop();
+        $('#countdownExample .values').html('lunch is over!');
         Swal.fire({
             type: 'error',
-            title: 'Oops...',
-            text: 'Time out!',
+            title: 'oops...',
+            text: 'lunch is over!',
             // footer: '<a href>Why do I have this issue?</a>'
         })
 
