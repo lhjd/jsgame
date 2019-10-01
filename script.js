@@ -1,13 +1,13 @@
-var refBoard = [
-    ["🍣", "🍔"],
-    ["🥞", null],
-];
-
 // var refBoard = [
-//     ["🧀", "🥪", "🍔"],
-//     ["🥙", "🥝", "🥑"],
-//     ["🥨", "🍞", null],
+//     ["🍣", "🍔"],
+//     ["🥞", null],
 // ];
+
+var refBoard = [
+    ["🧀", "🍔", "🍔"],
+    ["🥙", "🥝", "🥑"],
+    ["🥨", "🍞", null],
+];
 
 // get the board with the empty square swapped with the current movable square
 var getBoardWithSquaresSwapped = function(squareIcon, board, currSqLoc) {
@@ -384,6 +384,7 @@ var moveIcon = function(event, board) {
     setTimeout(function() { renderBoard(movedBoard); }, 300)
     var hasWon = checkWinState(board);
     if (hasWon) {
+        document.removeEventListener("keydown", function(event) { moveIcon(event); });
         setTimeout(function() { animateClearTable(); }, 500);
         setTimeout(function() { Swal.fire("Yay!", "Lunch is ready!", "success"); }, 2000);
     }

@@ -127,7 +127,8 @@
 }
 
 .game-title {
-		font-family: Helvetica, sans-serif;
+		/*font-family: Helvetica, sans-serif;*/
+		font-family: 'Schoolbell', cursive;
 		font-size: 3em;
 		color: #FFB13C;
 		/*text-shadow: 3px 3px #ccc;*/
@@ -137,7 +138,9 @@
 #new-game-btn {
 		width: 200px;
 		height: 50px;
-		font-family: Helvetica, sans-serif;
+		/*font-family: Helvetica, sans-serif;*/
+		font-family: 'Schoolbell', cursive;
+		font-size: 1.5em;
 		background-color: white;
 		border-radius: 5px;
 		border: 2px solid #ccc;
@@ -149,7 +152,9 @@
 		margin-top: 50px;
 		width: 200px;
 		height: 50px;
-		font-family: Helvetica, sans-serif;
+		/*font-family: Helvetica, sans-serif;*/
+		font-family: 'Schoolbell', cursive;
+		font-size: 1.5em;
 		background-color: white;
 		border-radius: 5px;
 		border: 2px solid #ccc;
@@ -162,7 +167,9 @@
 		margin-top: 50px;
 		width: 200px;
 		height: 50px;
-		font-family: Helvetica, sans-serif;
+		/*font-family: Helvetica, sans-serif;*/
+		font-family: 'Schoolbell', cursive;
+		font-size: 1.5em;
 		background-color: white;
 		border-radius: 5px;
 		border: 2px solid #ccc;
