@@ -238,3 +238,85 @@ https://www.w3schools.com/howto/howto_css_shake_image.asp
 				transform: translate(3000px, 0);
 		}
 }
+
+@media only screen and (max-width: 600px) {
+		.empty {
+				/*opacity: 0;*/
+				border: none;
+				box-shadow: none;
+				background-color: transparent;
+		}
+
+		.game-square {
+								/*display: flex;*/
+				/*flex-direction: column;*/
+				/*justify-content: center;*/
+				/*align-items: center;*/
+				/*border: 2px solid #ccc;*/
+
+				/*width: 100px;*/
+				/*height: 100px;*/
+				width: 200px;
+				height: 200px;
+				/*box-sizing: border-box;*/
+				/*background-color: white;*/
+				font-size: 4em;
+				border-radius: 50%;
+				/*user-select: none;*/
+				/*font-family: Helvetica, sans-serif;*/
+				margin: 15px;
+/*				box-shadow:
+						0 0 0 5px #817dd1,
+						0 0 0 10px #5c58aa,
+						10px 10px 5px 5px grey;
+*/				text-shadow: 3px 3px 2px grey;
+		}
+
+		.hint-game-square {
+				/*				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				border: 2px solid #ccc;
+*/
+				/*width: 100px;*/
+				/*height: 100px;*/
+				width: 90px;
+				height: 90px;
+				/*				box-sizing: border-box;
+				background-color: white;
+*/
+				font-size: 2.5em;
+				/*border-radius: 50%;*/
+				/*user-select: none;*/
+				/*font-family: Helvetica, sans-serif;*/
+				margin: 15px;
+				box-shadow:
+						0 0 0 1px #817dd1,
+						0 0 0 2px #5c58aa;
+		}
+
+		.move-left {
+				transition: all 0.3s ease;
+				transform: translate(-150px, 0);
+		}
+
+		.move-right {
+				transition: all 0.3s ease;
+				transform: translate(150px, 0);
+		}
+
+		.move-top {
+				transition: all 0.3s ease;
+				transform: translate(0, -150px);
+		}
+
+		.move-bottom {
+				transition: all 0.3s ease;
+				transform: translate(0, 150px);
+		}
+
+
+
+
+}
