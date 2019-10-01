@@ -135,6 +135,15 @@
 		margin: 10px;
 }
 
+.timer-display {
+		/*font-family: Helvetica, sans-serif;*/
+		font-family: 'Schoolbell', cursive;
+		font-size: 1.5em;
+		color: #FFB13C;
+		/*text-shadow: 3px 3px #ccc;*/
+		margin: 10px;
+}
+
 #new-game-btn {
 		width: 200px;
 		height: 50px;

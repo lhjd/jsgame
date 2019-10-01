@@ -226,12 +226,12 @@ var renderBoard = function(board) {
     btnRowDiv.classList.add("btn-row");
 
     var restartButton = document.createElement("button");
-    restartButton.innerText = "Restart";
+    restartButton.innerText = "restart";
     restartButton.id = "restart-game-btn";
     restartButton.addEventListener("click", startNewGame);
 
     var hintButton = document.createElement("button");
-    hintButton.innerText = "Hint";
+    hintButton.innerText = "hint";
     hintButton.id = "hint-btn";
     hintButton.setAttribute("data-toggle", "modal");
     hintButton.setAttribute("data-target", "#exampleModal");
@@ -392,6 +392,8 @@ var moveIcon = function(event, board) {
 
 // set up a new game
 var startNewGame = function() {
+    startTimer();
+
     // get a copy of refBoard
     var startingBoard = getRefBoard();
 
@@ -415,3 +417,26 @@ newGameBtn.addEventListener("click", startNewGame);
 
 // emoji from
 // https://emojipedia.org/
+
+
+//https://albert-gonzalez.github.io/easytimer.js/
+//https://github.com/albert-gonzalez/easytimer.js
+
+var startTimer = function() {
+    var timer = new easytimer.Timer();
+    timer.start({ countdown: true, startValues: { seconds: 60 } });
+    $('#countdownExample .values').html(timer.getTimeValues().toString());
+    timer.addEventListener('secondsUpdated', function(e) {
+        $('#countdownExample .values').html(timer.getTimeValues().toString());
+    });
+    timer.addEventListener('targetAchieved', function(e) {
+        $('#countdownExample .values').html('');
+        Swal.fire({
+            type: 'error',
+            title: 'Oops...',
+            text: 'Time out!',
+            // footer: '<a href>Why do I have this issue?</a>'
+        })
+
+    });
+};
