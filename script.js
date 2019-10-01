@@ -3,11 +3,13 @@
 //     ["🥞", null],
 // ];
 
-var refBoard = [
-    ["🧀", "🍔", "🍔"],
-    ["🥙", "🥝", "🥑"],
-    ["🥨", "🍞", null],
-];
+// var refBoard = [
+//     ["🧀", "🍔", "🍔"],
+//     ["🥙", "🥝", "🥑"],
+//     ["🥨", "🍞", null],
+// ];
+
+var level = 0;
 
 // get the board with the empty square swapped with the current movable square
 var getBoardWithSquaresSwapped = function(squareIcon, board, currSqLoc) {
@@ -88,16 +90,16 @@ var getMovedBoard = function(squareIcon, board, currSqLoc) {
 };
 
 // get a copy of the reference board
-var getRefBoard = function() {
-    var board = [];
-    board = refBoard.map(row => row.slice());
+// var getRefBoard = function() {
+//     var board = [];
+//     board = refBoard.map(row => row.slice());
 
-    return board;
-};
+//     return board;
+// };
 
 // check for winning state
 var checkWinState = function(board) {
-    var refBoard = getRefBoard();
+    var refBoard = getBoardforLevel();
     var currBoardString = board.toString();
     var refBoardString = refBoard.toString();
 
@@ -183,10 +185,21 @@ var handleSquareClick = function(event, board) {
 
     var hasWon = checkWinState(board);
     if (hasWon) {
+        timer.stop()
+        level++;
         // setTimeout(function() { alert("You Won!"); }, 500);
         setTimeout(function() { animateClearTable(); }, 500);
-        setTimeout(function() { Swal.fire("Yay!", "Lunch is ready!", "success"); }, 2000);
-
+        // setTimeout(function() { Swal.fire("Yay!", "Lunch is ready!", "success"); }, 2000);
+        setTimeout(function() {
+            Swal.fire({
+                type: 'success',
+                title: 'yay!',
+                text: 'lunch is ready!',
+                onClose: startNewGame,
+                // footer: '<a href>Why do I have this issue?</a>'
+            })
+        }, 2000);
+        // startNewGame();
     }
 };
 
@@ -243,7 +256,7 @@ var renderBoard = function(board) {
     interfaceDiv.appendChild(btnRowDiv);
 
 
-    var hintBoard = getRefBoard();
+    var hintBoard = getBoardforLevel();
 
     var hintBoardDiv = document.createElement("div");
     hintBoardDiv.classList.add("board");
@@ -257,7 +270,7 @@ var renderBoard = function(board) {
             hintSquareDiv.classList.add("hint-game-square");
             hintSquareDiv.innerText = hintBoard[i][j];
 
-            if (refBoard[i][j] === null) {
+            if (hintBoard[i][j] === null) {
                 hintSquareDiv.classList.add("empty");
                 hintSquareDiv.innerText = "🍴";
             }
@@ -336,7 +349,6 @@ var moveIcon = function(event, board) {
         currSqLoc[0] = emptySqLoc[0];
         currSqLoc[1] = emptySqLoc[1] - 1;
         if (currSqLoc.some(index => index < 0)) {
-            console.log("not moving!");
             return;
         } else {
             squareIcon = board[currSqLoc[0]][currSqLoc[1]];
@@ -347,7 +359,6 @@ var moveIcon = function(event, board) {
         currSqLoc[0] = emptySqLoc[0];
         currSqLoc[1] = emptySqLoc[1] + 1;
         if (currSqLoc.some(index => index > boardWidth - 1)) {
-            console.log("not moving!");
             return;
         } else {
             squareIcon = board[currSqLoc[0]][currSqLoc[1]];
@@ -358,7 +369,6 @@ var moveIcon = function(event, board) {
         currSqLoc[1] = emptySqLoc[1];
         currSqLoc[0] = emptySqLoc[0] - 1;
         if (currSqLoc.some(index => index < 0)) {
-            console.log("not moving!");
             return;
         } else {
             squareIcon = board[currSqLoc[0]][currSqLoc[1]];
@@ -369,7 +379,6 @@ var moveIcon = function(event, board) {
         currSqLoc[1] = emptySqLoc[1];
         currSqLoc[0] = emptySqLoc[0] + 1;
         if (currSqLoc.some(index => index > boardHeight - 1)) {
-            console.log("not moving!");
             return;
         } else {
             squareIcon = board[currSqLoc[0]][currSqLoc[1]];
@@ -384,19 +393,40 @@ var moveIcon = function(event, board) {
     setTimeout(function() { renderBoard(movedBoard); }, 300)
     var hasWon = checkWinState(board);
     if (hasWon) {
+        timer.stop();
+        level++;
         document.removeEventListener("keydown", function(event) { moveIcon(event); });
         setTimeout(function() { animateClearTable(); }, 500);
-        setTimeout(function() { Swal.fire("Yay!", "Lunch is ready!", "success"); }, 2000);
+        setTimeout(function() {
+            Swal.fire({
+                type: 'success',
+                title: 'Yay!',
+                text: 'Lunch is ready!',
+            });
+        }, 2000);
     }
+};
+
+
+var getBoardforLevel = function() {
+    // console.log("getting board for this level!");
+    // console.log("board for this level: ", levels[level]);
+    var board = [];
+    board = levels[level].map(row => row.slice());
+
+    return board;
 };
 
 // set up a new game
 var startNewGame = function() {
+    // level = 0;
 
     startTimer();
 
     // get a copy of refBoard
-    var startingBoard = getRefBoard();
+    // var startingBoard = getRefBoard();
+    var startingBoard = getBoardforLevel();
+
 
     // get a scrambled board
     var scrambledBoard = getScrambledBoard(startingBoard);
@@ -410,8 +440,6 @@ var startNewGame = function() {
 // add event listener to the new game button
 var newGameBtn = document.querySelector("#new-game-btn");
 newGameBtn.addEventListener("click", startNewGame);
-
-
 
 // cursor from
 // http://www.cursors-4u.com/
@@ -427,7 +455,7 @@ var timer = new easytimer.Timer();
 
 var startTimer = function() {
     timer.stop();
-
+    // debugger;
     timer.start({ countdown: true, startValues: { seconds: 120 } });
     $('#countdownExample .values').html(timer.getTimeValues().toString());
     timer.addEventListener('secondsUpdated', function(e) {
@@ -440,6 +468,7 @@ var startTimer = function() {
             type: 'error',
             title: 'oops...',
             text: 'lunch is over!',
+            onClose: startNewGame,
             // footer: '<a href>Why do I have this issue?</a>'
         })
 
