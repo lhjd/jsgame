@@ -1,3 +1,8 @@
+body {
+		background-image: url("img/wall.png");
+		background-repeat: repeat;
+}
+
 .board {
 		display: flex;
 		flex-direction: column;
@@ -8,12 +13,12 @@
 		padding: 10px;
 		background-image: url("img/tile.png");
 		background-repeat: repeat;
-    box-shadow: 1px 1px 0px #F9772F,
-                2px 2px 0px #F9772F,
-                3px 3px 0px #F9772F,
-                4px 4px 0px #F9772F,
-                5px 5px 0px #F9772F,
-                6px 6px 0px #F9772F;
+		box-shadow: 1px 1px 0px #F9772F,
+				2px 2px 0px #F9772F,
+				3px 3px 0px #F9772F,
+				4px 4px 0px #F9772F,
+				5px 5px 0px #F9772F,
+				6px 6px 0px #F9772F;
 }
 
 .game-row {
@@ -62,7 +67,7 @@
 				0 0 0 5px #817dd1,
 				0 0 0 10px #5c58aa,
 				10px 10px 5px 5px grey;
-  	text-shadow: 3px 3px 2px grey;
+		text-shadow: 3px 3px 2px grey;
 }
 
 .hint-game-square {
@@ -88,9 +93,9 @@
 }
 
 .empty {
-  	/*opacity: 0;*/
-  	border: none;
-  	box-shadow: none;
+		/*opacity: 0;*/
+		border: none;
+		box-shadow: none;
 		background-color: transparent;
 }
 

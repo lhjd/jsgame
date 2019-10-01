@@ -453,5 +453,7 @@ var startTimer = function() {
 // https://emojipedia.org/
 
 // timer from
-// https://albert-gonzalez.github.io/easytimer.js/
 // https://github.com/albert-gonzalez/easytimer.js
+
+// background tile images from
+// http://bg.siteorigin.com/
