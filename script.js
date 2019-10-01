@@ -395,13 +395,14 @@ var moveIcon = function(event, board) {
     if (hasWon) {
         timer.stop();
         level++;
-        document.removeEventListener("keydown", function(event) { moveIcon(event); });
+        // document.removeEventListener("keydown", function(event) { moveIcon(event); });
         setTimeout(function() { animateClearTable(); }, 500);
         setTimeout(function() {
             Swal.fire({
                 type: 'success',
                 title: 'Yay!',
                 text: 'Lunch is ready!',
+                onClose: startNewGame,
             });
         }, 2000);
     }
@@ -431,7 +432,7 @@ var startNewGame = function() {
     // get a scrambled board
     var scrambledBoard = getScrambledBoard(startingBoard);
 
-    document.addEventListener("keydown", function(event) { moveIcon(event, scrambledBoard); });
+    // document.addEventListener("keydown", function(event) { moveIcon(event, scrambledBoard); });
 
     // render the scrambled board
     renderBoard(scrambledBoard);
